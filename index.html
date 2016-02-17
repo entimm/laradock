@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Laradock by LaraDock</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Laradock</h1>
+      <h2 class="project-tagline">Like Laravel&#39;s Homstead but for Docker instead of Vagrant.</h2>
+      <a href="https://github.com/LaraDock/laradock" class="btn">View on GitHub</a>
+      <a href="https://github.com/LaraDock/laradock/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/LaraDock/laradock/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="laradock" class="anchor" href="#laradock" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>LaraDock</h1>
+
+<p><a href="http://www.zalt.me"><img src="http://forthebadge.com/images/badges/built-with-love.svg" alt="forthebadge"></a></p>
+
+<h2>
+<a id="contents" class="anchor" href="#contents" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contents</h2>
+
+<ul>
+<li><a href="#Intro">Intro</a></li>
+<li><a href="#Requirements">Requirements</a></li>
+<li><a href="#Usage">Usage</a></li>
+<li><a href="#Documentation">Documentation</a></li>
+<li><a href="#Supports">Supported Images</a></li>
+</ul>
+
+<p><img src="http://s11.postimg.org/uqpl3efab/laradock.jpg" alt=""></p>
+
+<p><a name="Intro"></a></p>
+
+<h3>
+<a id="what-is-laradock" class="anchor" href="#what-is-laradock" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What is LaraDock?</h3>
+
+<p><strong>LaraDock</strong> helps you run your <strong>Laravel</strong> App on <strong>Docker</strong> in seconds.</p>
+
+<p>LaraDock strives to make the development experience easier.
+It contains pre-packaged Docker Images that provides you a wonderful development environment without requiring you to install PHP, NGINX, MySQL, REDIS, and any other software on your local machine.</p>
+
+<h3>
+<a id="what-is-docker" class="anchor" href="#what-is-docker" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What is Docker?</h3>
+
+<p><a href="https://www.docker.com">Docker</a>  is an open-source project that automates the deployment of applications inside software containers, by providing an additional layer of abstraction and automation of <a href="https://en.wikipedia.org/wiki/Operating-system-level_virtualization">operating-system-level virtualization</a> on Linux, Mac OS and Windows.</p>
+
+<h3>
+<a id="what-is-laravel" class="anchor" href="#what-is-laravel" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What is Laravel?</h3>
+
+<p>Seriously!!!</p>
+
+<h3>
+<a id="why-docker-not-vagrant" class="anchor" href="#why-docker-not-vagrant" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Why Docker not Vagrant!?</h3>
+
+<p><a href="https://www.vagrantup.com">Vagrant</a> gives you Virtual Machines in minutes while Docker gives you Virtual Containers in seconds.</p>
+
+<p>Instead of providing a full Virtual Machines, like you get with Vagrant, Docker provides you <strong>lightweight</strong> Virtual Containers, that share the same kernel and allow to safely execute independent processes.</p>
+
+<h3>
+<a id="questions" class="anchor" href="#questions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Questions?</h3>
+
+<p><a href="https://gitter.im/LaraDock/laradock?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Join the chat at https://gitter.im/LaraDock/laradock"></a> </p>
+
+<p><a name="Requirements"></a></p>
+
+<h2>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Requirements</h2>
+
+<ul>
+<li>Laravel (<a href="https://laravel.com/docs/master/installation">Download</a>)</li>
+<li>Docker Toolbox (<a href="https://www.docker.com/toolbox">Download</a>)</li>
+<li>Git (<a href="https://git-scm.com/downloads">Download</a>)</li>
+<li>Composer (<a href="https://getcomposer.org/download/">Download</a>)</li>
+</ul>
+
+<p><em>Note: Git &amp; Composer can be installed on Docker Containers if you don't want to install them on your machine. (But you have to do this yourself for now).</em></p>
+
+<p><a name="Usage"></a></p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>1 - First install any version of Laravel, or use any of your existing Laravel projects.</p>
+
+<p>2 - Open your terminal and go to your Laravel project directory.</p>
+
+<p>3 - Create a new folder on the root directory of your Laravel project and name it <code>docker</code> then go into it.</p>
+
+<div class="highlight highlight-source-shell"><pre>mkdir docker <span class="pl-k">&amp;&amp;</span> <span class="pl-c1">cd</span> <span class="pl-smi">$_</span></pre></div>
+
+<p>3 - Clone the LaraDock repository inside that <code>docker</code> folder.</p>
+
+<div class="highlight highlight-source-shell"><pre>git clone https://github.com/LaraDock/laradock.git <span class="pl-c1">.</span></pre></div>
+
+<p>4 - Find your Docker IP address.</p>
+
+<ul>
+<li>If you are on Linux OS: your IP Address is <code>127.0.0.1</code> because the containers run directly on your localhost.</li>
+<li>If you are on MAC or Windows OS and using the <strong>docker-machine</strong>: start your docker machine then type <code>docker-machine ip {vm-name-here}</code>. <em>(The default IP is 192.168.99.100)</em>
+</li>
+<li>If you are on MAC or Windows OS and using <strong>boot2docker</strong>: type <code>boot2docker ip</code> when boot2docker is up.</li>
+</ul>
+
+<p>5 - Open your hosts file <code>/etc/hosts</code>.</p>
+
+<div class="highlight highlight-source-shell"><pre>sudo nano /etc/hosts</pre></div>
+
+<p>6 - Map your <code>Docker IP</code> to the <code>laravel.dev</code> domain, by adding the following to the <code>hosts</code> file. </p>
+
+<div class="highlight highlight-source-shell"><pre>xxx.xxx.xxx.xxx          laravel.dev</pre></div>
+
+<p>Don't forget to replace the <code>xxx.xxx.xxx.xxx</code> with your Docker IP Address.</p>
+
+<p>7 - Open <code>docker-compose.yml</code> file and replace the <code>xxx.xxx.xxx.xxx</code> with your Docker IP Adress as well.</p>
+
+<p>8 - Open your Laravel's <code>.env</code> file and set the <code>DB_HOST</code> and the <code>REDIS_HOST</code> to <code>laravel.dev</code> instead of the default <code>127.0.0.1</code>.</p>
+
+<pre lang="env"><code>DB_HOST=laravel.dev
+REDIS_HOST=laravel.dev
+</code></pre>
+
+<p>If you want to use Redis for Caching and/or for Sessions Management, set <code>CACHE_DRIVER</code> and <code>SESSION_DRIVER</code> to <code>redis</code> instead of the default <code>file</code>.</p>
+
+<pre lang="env"><code>CACHE_DRIVER=redis
+SESSION_DRIVER=redis
+</code></pre>
+
+<p>9 - Finally run the containers. Make sure you are in the <code>docker</code> folder before running this command.</p>
+
+<div class="highlight highlight-source-shell"><pre>docker-compose up -d</pre></div>
+
+<p><em>"Note: Only the first time you run this command, it will take up to 7 minutes (depend on your connection speed) to download the images to your local machine.</em></p>
+
+<p>10 - Open your browser and visit <code>http://laravel.dev</code></p>
+
+<blockquote>
+<p>Debugging: in case you faced an error here, it might be that you forget to provide some permissions for Laravel, so try running the following command on the Laravel rood directory:
+<code>sudo chmod -R 777 storage &amp;&amp; sudo chmod -R 777 bootstrap/cache</code></p>
+</blockquote>
+
+<p><a name="Documentation"></a></p>
+
+<h2>
+<a id="documentation" class="anchor" href="#documentation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Documentation</h2>
+
+<h4>
+<a id="see-current-running-containers" class="anchor" href="#see-current-running-containers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>See current running Containers</h4>
+
+<div class="highlight highlight-source-shell"><pre>docker ps</pre></div>
+
+<h4>
+<a id="close-all-running-containers" class="anchor" href="#close-all-running-containers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Close all running Containers</h4>
+
+<div class="highlight highlight-source-shell"><pre>docker-compose stop</pre></div>
+
+<h4>
+<a id="delete-all-existing-containers" class="anchor" href="#delete-all-existing-containers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Delete all existing Containers</h4>
+
+<div class="highlight highlight-source-shell"><pre>docker-compose rm -f</pre></div>
+
+<p><em>Note: Careful with this command as it will delete your Data Volume Container as well. (if you want to keep your Database data than you should stop each container by itself as follow):</em> </p>
+
+<p><code>docker stop {container-name}</code></p>
+
+<h4>
+<a id="remove-container" class="anchor" href="#remove-container" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Remove Container</h4>
+
+<p>To prevent a container (software) from running, open the <code>docker-compose.yml</code> file, and comment out the container section or remove it entirely.</p>
+
+<h4>
+<a id="add-an-image-add-a-software-to-run-with-other-containers" class="anchor" href="#add-an-image-add-a-software-to-run-with-other-containers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Add an Image (add a software to run with other Containers)</h4>
+
+<p>To add an image (software), just edit the <code>laradock/docker/docker-compose.yml</code> and add your container details, to do so you need to be familiar with the <a href="https://docs.docker.com/compose/yml/">docker compose file syntax</a>.</p>
+
+<h4>
+<a id="edit-a-container-change-ports-or-volumes" class="anchor" href="#edit-a-container-change-ports-or-volumes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Edit a Container (change Ports or Volumes)</h4>
+
+<p>To modify a container you can simply open the <code>laradock/docker/docker-compose.yml</code> and change everything you want.</p>
+
+<p>Example: if you want to set the MySQL port to 3333, just replace the default port with yours:</p>
+
+<div class="highlight highlight-source-yaml"><pre>  <span class="pl-s"><span class="pl-ent">ports:</span></span>
+    <span class="pl-s">- <span class="pl-s"><span class="pl-pds">"</span>3333:3306<span class="pl-pds">"</span></span></span></pre></div>
+
+<h4>
+<a id="edit-an-existing-image-change-some-configuration-in-the-image" class="anchor" href="#edit-an-existing-image-change-some-configuration-in-the-image" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Edit an existing Image (change some configuration in the image)</h4>
+
+<p>To edit an image, and take full control of it:</p>
+
+<ol>
+<li>clone the LaraDock <code>docker-images</code> repository <a href="https://github.com/LaraDock/images">https://github.com/LaraDock/docker-images</a>
+</li>
+<li>modify whichever <code>Dockfile</code> you want</li>
+<li>from the modified image directory run <code>docker build -t {your-image-name} .</code>
+</li>
+</ol>
+
+<p>All the images are open source and hosted on the <a href="https://hub.docker.com/u/laradock/">Docker Hub</a>.</p>
+
+<p><em>If you find any bug or you have and suggestion that can improve the performance of any image, please consider contributing. Thanks in advance.</em></p>
+
+<h4>
+<a id="view-the-log-files" class="anchor" href="#view-the-log-files" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>View the Log files</h4>
+
+<p>The Log files are stored in the <code>docker/logs</code> directory.</p>
+
+<p><a name="Supports"></a></p>
+
+<h2>
+<a id="highlights" class="anchor" href="#highlights" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Highlights</h2>
+
+<p><strong>Currently Supported Docker Images:</strong></p>
+
+<ul>
+<li><a href="https://hub.docker.com/r/laradock/phpnginx/">NGINX+PHP</a></li>
+<li><a href="https://hub.docker.com/r/laradock/mysql/">MySQL</a></li>
+<li><a href="https://hub.docker.com/r/laradock/redis/">Redis</a></li>
+<li><a href="https://hub.docker.com/r/laradock/beanstalkd/">Beanstalked</a></li>
+<li>
+<a href="https://hub.docker.com/r/laradock/data/">Data Volume</a> (for MySQL &amp; Redis)</li>
+</ul>
+
+<h2>
+<a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contributing</h2>
+
+<p>This little project was built by one man who has a full time job and many responsibilities, so if you like this project and you find that it needs a bug fix or support for new software or upgrade for the current containers, or anything else.. Do not hesitate to contribute, you are more than welcome :)</p>
+
+<h2>
+<a id="support" class="anchor" href="#support" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Support</h2>
+
+<p><a href="https://github.com/laradock/laradock/issues">Issues</a> on Github.</p>
+
+<h2>
+<a id="credits" class="anchor" href="#credits" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Credits</h2>
+
+<p><a href="http://www.zalt.me"><img src="https://img.shields.io/badge/Author-Mahmoud%20Zalt-orange.svg" alt="Mahmoud Zalt"></a></p>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
+
+<p><a href="https://github.com/laradock/laradock/blob/master/LICENSE">MIT License (MIT)</a></p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/LaraDock/laradock">Laradock</a> is maintained by <a href="https://github.com/LaraDock">LaraDock</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
