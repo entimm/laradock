@@ -73,24 +73,23 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 
 <p><a href="https://gitter.im/LaraDock/laradock?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Join the chat at https://gitter.im/LaraDock/laradock"></a> </p>
 
-<p><br>
-<a name="Images"></a></p>
+<p><a name="Images"></a></p>
 
 <h2>
-<a id="included-software" class="anchor" href="#included-software" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Included Software</h2>
-
-<p><strong>Docker Images:</strong></p>
+<a id="supported-software-docker-images" class="anchor" href="#supported-software-docker-images" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Supported Software (Docker Images)</h2>
 
 <ul>
-<li><a href="https://hub.docker.com/r/laradock/phpnginx/">NGINX+PHP</a></li>
-<li><a href="https://hub.docker.com/r/laradock/mysql/">MySQL</a></li>
-<li><a href="https://hub.docker.com/r/laradock/redis/">Redis</a></li>
-<li><a href="https://hub.docker.com/r/laradock/beanstalkd/">Beanstalked</a></li>
-<li>
-<a href="https://hub.docker.com/r/laradock/data/">Data Volume</a> (for MySQL &amp; Redis)</li>
+<li>PHP 5.6 / NGINX</li>
+<li>PHP 5.5 / NGINX</li>
+<li>MySQL</li>
+<li>Redis</li>
+<li>Data Volume (for MySQL &amp; Redis)</li>
+<li>Beanstalked</li>
 </ul>
 
-<p>You can edit these images, on this repository <a href="https://github.com/LaraDock/docker-images">https://github.com/LaraDock/docker-images </a>.</p>
+<p>The Images links on <a href="https://github.com/LaraDock">Github</a>
+<br>
+The Images links on <a href="https://hub.docker.com/u/laradock/">Docker Hub</a></p>
 
 <p><a name="Requirements"></a></p>
 
@@ -104,8 +103,7 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 <li>Composer (<a href="https://getcomposer.org/download/">Download</a>)</li>
 </ul>
 
-<p><br>
-<a name="Usage"></a></p>
+<p><a name="Usage"></a></p>
 
 <h2>
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
@@ -143,24 +141,45 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 REDIS_HOST=laravel.dev
 </code></pre>
 
-<p>If you want to use Redis for Caching and/or for Sessions Management, set <code>CACHE_DRIVER</code> and <code>SESSION_DRIVER</code> to <code>redis</code> instead of the default <code>file</code>.</p>
+<p>If you don't find the <code>REDIS_HOST</code> variable in your <code>.env</code> file. Go to the database config file <code>config/database.php</code> and replace the <code>127.0.0.1</code> with <code>laravel.dev</code> for Redis like so:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-s"><span class="pl-pds">'</span>redis<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> [</span>
+<span class="pl-s1">    <span class="pl-s"><span class="pl-pds">'</span>cluster<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">false</span>,</span>
+<span class="pl-s1">    <span class="pl-s"><span class="pl-pds">'</span>default<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> [</span>
+<span class="pl-s1">        <span class="pl-s"><span class="pl-pds">'</span>host<span class="pl-pds">'</span></span>     <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>laravel.dev<span class="pl-pds">'</span></span>,</span>
+<span class="pl-s1">        <span class="pl-s"><span class="pl-pds">'</span>port<span class="pl-pds">'</span></span>     <span class="pl-k">=&gt;</span> <span class="pl-c1">6379</span>,</span>
+<span class="pl-s1">        <span class="pl-s"><span class="pl-pds">'</span>database<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">0</span>,</span>
+<span class="pl-s1">    ],</span>
+<span class="pl-s1">],</span></pre></div>
+
+<p>If you want to use Redis for Caching and/or for Sessions Management. Open the <code>.env</code> file and set <code>CACHE_DRIVER</code> and <code>SESSION_DRIVER</code> to <code>redis</code> instead of the default <code>file</code>.</p>
 
 <pre lang="env"><code>CACHE_DRIVER=redis
 SESSION_DRIVER=redis
 </code></pre>
 
-<p>8 - Finally run the containers. Make sure you are in the <code>docker</code> folder before running this command.</p>
+<p>8 - Finally run the containers. <strong>Make sure you are in the <code>docker</code> folder</strong> before running this command.</p>
 
 <div class="highlight highlight-source-shell"><pre>docker-compose up -d</pre></div>
 
+<p>You can run <code>docker-compose up</code> (without <strong>-d</strong>) if you don't want to run the containers in the background.</p>
+
 <p><em>"Note: Only the first time you run this command, it will take up to 5 minutes (depend on your connection speed) to download the images to your local machine.</em></p>
+
+<blockquote>
+<p>Debugging: in case you faced a problem with the docker mahcine here, run this command in your current terminal session <code>eval "$(docker-machine env {vm-name-here})"</code>.</p>
+</blockquote>
 
 <p>9 - Open your browser and visit <code>http://laravel.dev</code></p>
 
 <blockquote>
 <p>Debugging: in case you faced an error here, it might be that you forget to provide some permissions for Laravel, so try running the following command on the Laravel root directory:
-<code>sudo chmod -R 777 storage &amp;&amp; sudo chmod -R 777 bootstrap/cache</code></p>
+<code>sudo chmod -R 777 storage &amp;&amp; sudo chmod -R 777 bootstrap/cache</code>.</p>
 </blockquote>
+
+<p><br></p>
+
+<p><a href="https://twitter.com/Mahmoud_Zalt">Follow @Mahmoud_Zalt</a></p>
 
 <p><br>
 <a name="Documentation"></a></p>
@@ -173,10 +192,14 @@ SESSION_DRIVER=redis
 
 <div class="highlight highlight-source-shell"><pre>docker ps</pre></div>
 
+<p><br></p>
+
 <h4>
 <a id="close-all-running-containers" class="anchor" href="#close-all-running-containers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Close all running Containers</h4>
 
 <div class="highlight highlight-source-shell"><pre>docker-compose stop</pre></div>
+
+<p><br></p>
 
 <h4>
 <a id="delete-all-existing-containers" class="anchor" href="#delete-all-existing-containers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Delete all existing Containers</h4>
@@ -187,42 +210,66 @@ SESSION_DRIVER=redis
 
 <p><code>docker stop {container-name}</code></p>
 
+<p><br></p>
+
+<h4>
+<a id="change-the-php-version" class="anchor" href="#change-the-php-version" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Change the PHP Version</h4>
+
+<p>By default <strong>PHP 5.6</strong> is running.
+<br>
+To change the default PHP version, simply open your <code>docker-compose.yml</code> file and edit this line:</p>
+
+<div class="highlight highlight-source-yaml"><pre><span class="pl-s"><span class="pl-ent">image:</span> <span class="pl-s">laradock/php56nginx:0.1.0</span></span></pre></div>
+
+<p>Supported versions:</p>
+
+<ul>
+<li>(PHP 5.5.*) laradock/php55nginx:latest</li>
+<li>(PHP 5.6.*) laradock/php56nginx:latest</li>
+</ul>
+
+<p><strong>Note:</strong></p>
+
+<p>If you set <code>laradock/phpnginx</code> as your image, this will pull from <code>laradock/php56nginx</code>.</p>
+
+<p><br></p>
+
+<h4>
+<a id="upgrade-the-docker-images" class="anchor" href="#upgrade-the-docker-images" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Upgrade the docker images</h4>
+
+<p>By default <code>docker-compose.yml</code> is configured to use the latest stable version of the image (latest stable realease <code>tag</code>).</p>
+
+<p>To use the latest build you can edit the <code>docker-compose.yml</code> file and replace the version number at the end of every image name with <code>:latest</code>
+<br>
+Example: change <code>image: laradock/mysql:0.1.0</code> to <code>image: laradock/mysql:latest</code></p>
+
+<p><br></p>
+
 <h4>
 <a id="remove-container" class="anchor" href="#remove-container" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Remove Container</h4>
 
 <p>To prevent a container (software) from running, open the <code>docker-compose.yml</code> file, and comment out the container section or remove it entirely.</p>
 
+<p><br></p>
+
 <h4>
 <a id="add-an-image-add-a-software-to-run-with-other-containers" class="anchor" href="#add-an-image-add-a-software-to-run-with-other-containers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Add an Image (add a software to run with other Containers)</h4>
 
-<p>To add an image (software), just edit the <code>laradock/docker/docker-compose.yml</code> and add your container details, to do so you need to be familiar with the <a href="https://docs.docker.com/compose/yml/">docker compose file syntax</a>.</p>
+<p>To add an image (software), just edit the <code>docker-compose.yml</code> and add your container details, to do so you need to be familiar with the <a href="https://docs.docker.com/compose/yml/">docker compose file syntax</a>.</p>
+
+<p><br></p>
 
 <h4>
 <a id="edit-a-container-change-ports-or-volumes" class="anchor" href="#edit-a-container-change-ports-or-volumes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Edit a Container (change Ports or Volumes)</h4>
 
-<p>To modify a container you can simply open the <code>laradock/docker/docker-compose.yml</code> and change everything you want.</p>
+<p>To modify a container you can simply open the <code>docker-compose.yml</code> and change everything you want.</p>
 
 <p>Example: if you want to set the MySQL port to 3333, just replace the default port with yours:</p>
 
 <div class="highlight highlight-source-yaml"><pre>  <span class="pl-s"><span class="pl-ent">ports:</span></span>
     <span class="pl-s">- <span class="pl-s"><span class="pl-pds">"</span>3333:3306<span class="pl-pds">"</span></span></span></pre></div>
 
-<h4>
-<a id="edit-an-existing-image-change-some-configuration-in-the-image" class="anchor" href="#edit-an-existing-image-change-some-configuration-in-the-image" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Edit an existing Image (change some configuration in the image)</h4>
-
-<p>To edit an image, and take full control of it:</p>
-
-<ol>
-<li>clone the LaraDock <code>docker-images</code> repository <a href="https://github.com/LaraDock/images">https://github.com/LaraDock/docker-images</a>
-</li>
-<li>modify whichever <code>Dockfile</code> you want</li>
-<li>from the modified image directory run <code>docker build -t {your-image-name} .</code>
-</li>
-</ol>
-
-<p>All the images are open source and hosted on the <a href="https://hub.docker.com/u/laradock/">Docker Hub</a>.</p>
-
-<p><em>If you find any bug or you have and suggestion that can improve the performance of any image, please consider contributing. Thanks in advance.</em></p>
+<p><br></p>
 
 <h4>
 <a id="view-the-log-files" class="anchor" href="#view-the-log-files" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>View the Log files</h4>
@@ -231,19 +278,32 @@ SESSION_DRIVER=redis
 
 <p><br></p>
 
+<h4>
+<a id="edit-an-existing-image-change-some-configuration-in-the-image" class="anchor" href="#edit-an-existing-image-change-some-configuration-in-the-image" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Edit an existing Image (change some configuration in the image)</h4>
+
+<p>To edit an image, and take full control of it:</p>
+
+<ol>
+<li>Clone any Image from <a href="https://github.com/LaraDock">https://github.com/LaraDock</a>
+</li>
+<li>Modify the <code>Dockfile</code>
+</li>
+<li>Run <code>docker build -t {your-image-name} .</code>
+</li>
+</ol>
+
+<p>All the images are open source and hosted on the <a href="https://hub.docker.com/u/laradock/">Docker Hub</a>.</p>
+
+<p><em>If you find any bug or you have and suggestion that can improve the performance of any image, please consider contributing. Thanks in advance.</em></p>
+
+<p><br></p>
+
 <h2>
 <a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contributing</h2>
 
 <p>This little project was built by one man who has a full time job and many responsibilities, so if you like this project and you find that it needs a bug fix or support for new software or upgrade for the current containers, or anything else.. Do not hesitate to contribute, you are more than welcome :)</p>
 
-<p>The project consist of 2 repositories:</p>
-
-<ul>
-<li>Laradock: <a href="https://github.com/LaraDock/laradock">https://github.com/LaraDock/laradock</a>
-</li>
-<li>Docker-Images: <a href="https://github.com/LaraDock/docker-images">https://github.com/LaraDock/docker-images</a>
-</li>
-</ul>
+<p>All Docker Images can be found at <a href="https://github.com/LaraDock">https://github.com/LaraDock</a></p>
 
 <h2>
 <a id="support" class="anchor" href="#support" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Support</h2>
