@@ -28,7 +28,7 @@
 <br>
 It's like Laravel Homestead but for Docker instead of Vagrant.</p>
 
-<p><img src="http://s11.postimg.org/uqpl3efab/laradock.jpg" alt=""></p>
+<p><img src="http://s18.postimg.org/fhykchl09/new_laradock_cover.png" alt=""></p>
 
 <p><br></p>
 
@@ -374,15 +374,18 @@ Example: change <code>image: laradock/mysql:0.1.0</code> to <code>image: laradoc
 <h4>
 <a id="find-your-docker-ip-address" class="anchor" href="#find-your-docker-ip-address" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Find your Docker IP Address</h4>
 
-<ul>
-<li><p><strong>On Windows &amp; MAC:</strong> run <code>docker-machine ip default</code>
-<br>
-<em>(The default IP is 192.168.99.100)</em></p></li>
-<li><p><strong>On Linux:</strong> your IP Address is <code>127.0.0.1</code></p></li>
-</ul>
+<p><strong>On Windows &amp; MAC:</strong> </p>
+
+<div class="highlight highlight-source-shell"><pre>docker-machine ip default</pre></div>
+
+<p><em>(The default IP is 192.168.99.100)</em></p>
+
+<p><strong>On Linux:</strong> </p>
+
+<p>Your IP Address is <code>127.0.0.1</code></p>
 
 <blockquote>
-<p>For <strong>boot2docker</strong> users: run <code>boot2docker ip</code> <em>(when boot2docker is up)</em>.</p>
+<p><strong>boot2docker</strong> users: run <code>boot2docker ip</code> <em>(when boot2docker is up)</em>.</p>
 </blockquote>
 
 <p><br>
@@ -391,22 +394,17 @@ Example: change <code>image: laradock/mysql:0.1.0</code> to <code>image: laradoc
 <h4>
 <a id="run-a-docker-virtual-host" class="anchor" href="#run-a-docker-virtual-host" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Run a Docker Virtual Host</h4>
 
-<ul>
-<li>
-<strong>On Windows &amp; MAC:</strong> run <code>docker-machine start default</code>
-</li>
-</ul>
+<p>This step is only for <strong>Windows &amp; MAC</strong> users, run the default Host:</p>
+
+<div class="highlight highlight-source-shell"><pre>docker-machine start default</pre></div>
+
+<p>If the host "default" does not exist, create one using the command below, else skip it:</p>
+
+<div class="highlight highlight-source-shell"><pre>docker-machine create -d virtualbox default</pre></div>
 
 <blockquote>
-<p>If the host "default" does not exist, create it using:
-<br>
-<code>docker-machine create -d virtualbox default</code></p>
+<p><strong>Note:</strong> Linux users don't need a virtual host, since Docker runs locally on a the machine.</p>
 </blockquote>
-
-<ul>
-<li>
-<strong>On Linux:</strong> you don't need a virtual host, since Docker runs locally on your machine.</li>
-</ul>
 
 <p><br></p>
 
