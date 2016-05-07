@@ -37,7 +37,7 @@ It's like Laravel Homestead but for Docker instead of Vagrant.</p>
 
 <ul>
 <li><a href="#Intro">Intro</a></li>
-<li><a href="#Supported-Software">Supported Software (Docker Images)</a></li>
+<li><a href="#Supported-Containers">Supported Containers</a></li>
 <li><a href="#Requirements">Requirements</a></li>
 <li><a href="#Installation">Installation</a></li>
 <li><a href="#Usage">Usage</a></li>
@@ -48,17 +48,18 @@ It's like Laravel Homestead but for Docker instead of Vagrant.</p>
 <li><a href="#List-current-running-Containers">List current running Containers</a></li>
 <li><a href="#Close-all-running-Containers">Close all running Containers</a></li>
 <li><a href="#Delete-all-existing-Containers">Delete all existing Containers</a></li>
-<li><a href="#Use-Redis-in-Laravel">Use Redis in Laravel</a></li>
+<li><a href="#Build-Re-build-Containers">Build/Re-build Containers</a></li>
+<li><a href="#Use-Redis">Use Redis</a></li>
 <li><a href="Use-custom-Domain">Use custom Domain</a></li>
 <li><a href="#Change-the-PHP-Version">Change the PHP Version</a></li>
 <li><a href="#AddRemove-a-Docker-Container">Add/Remove a Docker Container</a></li>
-<li><a href="#Add-Docker-Images">Add Docker Images</a></li>
+<li><a href="#Add-Docker-Images">Add more Software's (Docker Images)</a></li>
 <li><a href="#Edit-a-Docker-Container">Edit a Docker Container</a></li>
 <li><a href="#View-the-Log-files">View the Log files</a></li>
-<li><a href="#Upgrade-the-Docker-Images">Upgrade the Docker Images</a></li>
+<li><a href="#Enter-Container">Enter a Container (SSH into a running Container)</a></li>
 <li><a href="#Edit-a-Docker-Image">Edit a Docker Image</a></li>
-<li><a href="#Find-Docker-IP-Address">Find your Docker IP Address</a></li>
 <li><a href="#Run-Docker-Virtual-Host">Run a Docker Virtual Host</a></li>
+<li><a href="#Find-Docker-IP-Address">Find your Docker IP Address</a></li>
 </ul>
 </li>
 </ul>
@@ -88,23 +89,19 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 
 <p>Instead of providing a full Virtual Machines, like you get with Vagrant, Docker provides you <strong>lightweight</strong> Virtual Containers, that share the same kernel and allow to safely execute independent processes.</p>
 
-<p><a name="Supported-Software"></a></p>
+<p><a name="Supported-Containers"></a></p>
 
 <h2>
-<a id="supported-software-docker-images" class="anchor" href="#supported-software-docker-images" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Supported Software (Docker Images)</h2>
+<a id="supported-containers" class="anchor" href="#supported-containers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Supported Containers</h2>
 
 <ul>
-<li>PHP 5.6 / NGINX</li>
-<li>PHP 5.5 / NGINX</li>
+<li>PHP</li>
+<li>NGINX</li>
 <li>MySQL</li>
+<li>PostgreSQL</li>
 <li>Redis</li>
-<li>Data Volume (for MySQL &amp; Redis)</li>
-<li>Beanstalked</li>
+<li>Data Volume</li>
 </ul>
-
-<p>The Images links on <a href="https://github.com/LaraDock">Github</a>
-<br>
-The Images links on <a href="https://hub.docker.com/u/laradock/">Docker Hub</a></p>
 
 <p><a name="Requirements"></a></p>
 
@@ -123,12 +120,16 @@ The Images links on <a href="https://hub.docker.com/u/laradock/">Docker Hub</a><
 <h2>
 <a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
 
-<p>1 - Clone the <code>LaraDock</code> repository, in any of your <code>Laravel</code> projects <em>(using this command)</em>:</p>
+<p>1 - Clone the <code>LaraDock</code> repository, in any of your <code>Laravel</code> projects:</p>
 
 <div class="highlight highlight-source-shell"><pre>git clone https://github.com/LaraDock/laradock.git docker</pre></div>
 
+<p>Instead of <code>git clone</code> you can use <code>git submodule add</code> in case you are already using Git for your Laravel project <em>(Recommended)</em>:</p>
+
+<div class="highlight highlight-source-shell"><pre>git submodule add https://github.com/LaraDock/laradock.git docker</pre></div>
+
 <blockquote>
-<p>This should create a <code>docker</code> folder, on the root directory of your Laravel project.</p>
+<p>These commands should create a <code>docker</code> folder, on the root directory of your Laravel project.</p>
 </blockquote>
 
 <p><a name="Usage"></a></p>
@@ -151,25 +152,33 @@ The Images links on <a href="https://hub.docker.com/u/laradock/">Docker Hub</a><
 <p><a href="#Find-Docker-IP-Address">How to find my Docker IP Address?</a></p>
 
 <p><br>
-2 - Run the containers: 
+2 - Run the Containers, (you can select the software's (containers) that you wish to run)
 <br>
-<em>(Make sure you are in the <code>docker</code> folder before running this command)</em></p>
-
-<div class="highlight highlight-source-shell"><pre>docker-compose up -d</pre></div>
-
-<p><em>"Note: Only the first time you run this command, it will take up to 5 minutes (depend on your connection speed) to download the Docker Images on your local machine.</em></p>
+<em>Make sure you are in the <code>docker</code> folder before running the <code>docker-compose</code> command.</em></p>
 
 <blockquote>
-<p>Debugging: in case you faced a problem with the docker mahcine here, run this command in your current terminal session <code>eval "$(docker-machine env default)"</code></p>
+<p>Running PHP, NGINX and MySQL:</p>
 </blockquote>
+
+<div class="highlight highlight-source-shell"><pre>docker-compose up -d   php nginx mysql</pre></div>
+
+<p>Note: you can choose your own combination of software's (containers), another example:</p>
+
+<blockquote>
+<p>Running PHP, NGINX, Postgres and Redis:</p>
+</blockquote>
+
+<div class="highlight highlight-source-shell"><pre>docker-compose up -d   php nginx postgres redis</pre></div>
+
+<p>Supported Containers: <code>php</code>, <code>nginx</code>, <code>mysql</code>, <code>postgres</code>, <code>redis</code>, <code>data</code>.</p>
 
 <p><br>
 3 - Open your browser and visit your <code>{Docker-IP}</code> address (<code>http://xxx.xxx.xxx.xxx</code>).</p>
 
-<blockquote>
-<p>Debugging: in case you faced an error here, run this command from the Laravel root directory:
-<code>sudo chmod -R 777 storage &amp;&amp; sudo chmod -R 777 bootstrap/cache</code></p>
-</blockquote>
+<p><br>
+<strong>Debugging</strong>: in case you faced an error here, run this command from the Laravel root directory:</p>
+
+<div class="highlight highlight-source-shell"><pre>sudo chmod -R 777 storage <span class="pl-k">&amp;&amp;</span> sudo chmod -R 777 bootstrap/cache</pre></div>
 
 <p><br></p>
 
@@ -196,6 +205,10 @@ The Images links on <a href="https://hub.docker.com/u/laradock/">Docker Hub</a><
 
 <div class="highlight highlight-source-shell"><pre>docker-compose stop</pre></div>
 
+<p>To stop single container do:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-c1">docker</span><span class="pl-k">-</span><span class="pl-c1">compose</span> <span class="pl-c1">stop</span> {<span class="pl-c1">container</span><span class="pl-k">-</span><span class="pl-c1">name</span>}</span></pre></div>
+
 <p><br>
 <a name="Delete-all-existing-Containers"></a></p>
 
@@ -206,20 +219,34 @@ The Images links on <a href="https://hub.docker.com/u/laradock/">Docker Hub</a><
 
 <p><em>Note: Careful with this command as it will delete your Data Volume Container as well. (if you want to keep your Database data than you should stop each container by itself as follow):</em> </p>
 
-<p><code>docker stop {container-name}</code></p>
-
 <p><br>
-<a name="Use-Redis-in-Laravel"></a></p>
+<a name="Build-Re-build-Containers"></a></p>
 
 <h4>
-<a id="use-redis-in-laravel" class="anchor" href="#use-redis-in-laravel" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Use Redis in Laravel</h4>
+<a id="buildre-build-containers" class="anchor" href="#buildre-build-containers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Build/Re-build Containers</h4>
 
-<p>Open your Laravel's <code>.env</code> file and set the <code>REDIS_HOST</code> to your <code>Docker-IP</code> instead of the default <code>127.0.0.1</code>.</p>
+<p>If you do any change to any <code>dockerfile</code> make sure you run this command, for the changes to take effect:</p>
+
+<div class="highlight highlight-source-shell"><pre>docker-compose build</pre></div>
+
+<p>Optionally you can specify which container to rebuild (instead of rebuilding all the containers), example rebuilding <code>PHP</code>:</p>
+
+<div class="highlight highlight-source-shell"><pre>docker-compose build php</pre></div>
+
+<p><br>
+<a name="Use-Redis"></a></p>
+
+<h4>
+<a id="use-redis" class="anchor" href="#use-redis" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Use Redis</h4>
+
+<p>1 - First make sure you run the Redis Container with the <code>docker-compose</code> command.</p>
+
+<p>2 - Open your Laravel's <code>.env</code> file and set the <code>REDIS_HOST</code> to your <code>Docker-IP</code> instead of the default <code>127.0.0.1</code> IP.</p>
 
 <pre lang="env"><code>REDIS_HOST=xxx.xxx.xxx.xxx
 </code></pre>
 
-<p>If you don't find the <code>REDIS_HOST</code> variable in your <code>.env</code> file. Go to the database config file <code>config/database.php</code> and replace the <code>127.0.0.1</code> with your <code>Docker-IP</code> for Redis like this:</p>
+<p>If you don't find the <code>REDIS_HOST</code> variable in your <code>.env</code> file. Go to the database config file <code>config/database.php</code> and replace the default <code>127.0.0.1</code> IP with your <code>Docker-IP</code> for Redis like this:</p>
 
 <div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-s"><span class="pl-pds">'</span>redis<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> [</span>
 <span class="pl-s1">    <span class="pl-s"><span class="pl-pds">'</span>cluster<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">false</span>,</span>
@@ -230,15 +257,19 @@ The Images links on <a href="https://hub.docker.com/u/laradock/">Docker Hub</a><
 <span class="pl-s1">    ],</span>
 <span class="pl-s1">],</span></pre></div>
 
-<p>To enable Redis Caching and/or for Sessions Management. Also from the <code>.env</code> file set <code>CACHE_DRIVER</code> and <code>SESSION_DRIVER</code> to <code>redis</code> instead of the default <code>file</code>.</p>
+<p>3 - To enable Redis Caching and/or for Sessions Management. Also from the <code>.env</code> file set <code>CACHE_DRIVER</code> and <code>SESSION_DRIVER</code> to <code>redis</code> instead of the default <code>file</code>.</p>
 
 <pre lang="env"><code>CACHE_DRIVER=redis
 SESSION_DRIVER=redis
 </code></pre>
 
-<p>Finally make sure you have the <code>predis/predis</code> package <code>(~1.0)</code> installed via Composer first.</p>
+<p>4 - Finally make sure you have the <code>predis/predis</code> package <code>(~1.0)</code> installed via Composer first.</p>
 
 <div class="highlight highlight-source-shell"><pre>composer require predis/predis:^1.0</pre></div>
+
+<p>5 - You can manually test it from Laravel with this code:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-c1">\</span><span class="pl-c1">Cache</span><span class="pl-k">::</span>store(<span class="pl-s"><span class="pl-pds">'</span>redis<span class="pl-pds">'</span></span>)<span class="pl-k">-&gt;</span>put(<span class="pl-s"><span class="pl-pds">'</span>laradock<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>awesome<span class="pl-pds">'</span></span>, <span class="pl-c1">10</span>);</span></pre></div>
 
 <p><br>
 <a name="Use-custom-Domain"></a></p>
@@ -259,21 +290,12 @@ Example:</p>
 <pre lang="env"><code>DB_HOST=xxx.xxx.xxx.xxx
 </code></pre>
 
-<p>3 - Open the nginx config file <code>docker/settings/nginx/default</code> and add this in the <code>server</code>:</p>
+<p>3 - Open your browser and visit <code>{http://laravel.dev}</code></p>
+
+<p>Optionally you can define the server name in the nginx config file, like this:</p>
 
 <pre><code>server_name laravel.dev;
 </code></pre>
-
-<p>4 - Open your browser and visit <code>{http://laravel.dev}</code></p>
-
-<blockquote>
-<p>In case you faced any problem, try this additional step:</p>
-
-<p>Open the <code>docker-compose.yml</code> and add the following to <code>php-nginx:</code></p>
-
-<div class="highlight highlight-source-yaml"><pre> <span class="pl-s"><span class="pl-ent">extra_hosts:</span></span>
-   <span class="pl-s">- <span class="pl-s"><span class="pl-pds">"</span>laravel.dev:xxx.xxx.xxx.xxx<span class="pl-pds">"</span></span></span></pre></div>
-</blockquote>
 
 <p><br>
 <a name="Change-the-PHP-Version"></a></p>
@@ -281,30 +303,37 @@ Example:</p>
 <h4>
 <a id="change-the-php-version" class="anchor" href="#change-the-php-version" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Change the PHP Version</h4>
 
-<p>By default <strong>PHP 5.6</strong> is running.
+<p>By default <strong>PHP 7.0</strong> is running.
 <br>
-To change the default PHP version, simply open your <code>docker-compose.yml</code> file and edit this line:</p>
+To change the default PHP version:</p>
 
-<div class="highlight highlight-source-yaml"><pre><span class="pl-s"><span class="pl-ent">image:</span> <span class="pl-s">laradock/php56nginx:latest</span></span></pre></div>
+<p>1 - Open the <code>dockerfile</code> of the <code>php</code> folder.</p>
 
-<p>Supported versions:</p>
+<p>2 - Change the PHP version number in the first line,</p>
+
+<pre lang="txt"><code>FROM php:7.0-fpm
+</code></pre>
+
+<p>Supported Versions:</p>
 
 <ul>
-<li>(PHP 5.5.*) laradock/php55nginx:latest</li>
-<li>(PHP 5.6.*) laradock/php56nginx:latest</li>
+<li>For (PHP 7.0.*) use <code>php:7.0-fpm</code>
+</li>
+<li>For (PHP 5.6.*) use <code>php:5.6-fpm</code>
+</li>
+<li>For (PHP 5.5.*) use <code>php:5.5-fpm</code>
+</li>
 </ul>
 
-<p><strong>Note:</strong> If you use this <code>laradock/phpnginx</code> image, it will pull from <code>laradock/php56nginx</code>.</p>
+<p>For more details visit the <a href="https://hub.docker.com/_/php/">official PHP docker images</a>.</p>
 
 <p><br>
 <a name="Add-Docker-Images"></a></p>
 
 <h4>
-<a id="add-docker-images" class="anchor" href="#add-docker-images" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Add Docker Images</h4>
+<a id="add-more-softwares-docker-images" class="anchor" href="#add-more-softwares-docker-images" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Add more Software's (Docker Images)</h4>
 
-<p><em>(add a software to run with other Containers)</em>
-<br>
-To add an image (software), just edit the <code>docker-compose.yml</code> and add your container details, to do so you need to be familiar with the <a href="https://docs.docker.com/compose/yml/">docker compose file syntax</a>.</p>
+<p>To add an image (software), just edit the <code>docker-compose.yml</code> and add your container details, to do so you need to be familiar with the <a href="https://docs.docker.com/compose/compose-file/">docker compose file syntax</a>.</p>
 
 <p><br>
 <a name="Edit-a-Docker-Container"></a></p>
@@ -328,16 +357,22 @@ To add an image (software), just edit the <code>docker-compose.yml</code> and ad
 <p>The Log files are stored in the <code>docker/logs</code> directory.</p>
 
 <p><br>
-<a name="Upgrade-the-Docker-Images"></a></p>
+<a name="Enter-Container"></a></p>
 
 <h4>
-<a id="upgrade-the-docker-images" class="anchor" href="#upgrade-the-docker-images" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Upgrade the Docker Images</h4>
+<a id="enter-a-container-ssh-into-a-running-container" class="anchor" href="#enter-a-container-ssh-into-a-running-container" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Enter a Container (SSH into a running Container)</h4>
 
-<p>By default <code>docker-compose.yml</code> is configured to use the latest stable version of the image (latest stable realease <code>tag</code>).</p>
+<p>1 - first list the current running containers with <code>docker ps</code></p>
 
-<p>To use the latest build you can edit the <code>docker-compose.yml</code> file and replace the version number at the end of every image name with <code>:latest</code>
-<br>
-Example: change <code>image: laradock/mysql:0.1.0</code> to <code>image: laradock/mysql:latest</code></p>
+<p>2 - enter any container with:</p>
+
+<p>Example: enter the <code>php</code> container</p>
+
+<div class="highlight highlight-source-shell"><pre>docker <span class="pl-c1">exec</span> -it php bash</pre></div>
+
+<p>Example: enter the <code>nginx</code> container</p>
+
+<div class="highlight highlight-source-shell"><pre>docker <span class="pl-c1">exec</span> -it nginx bash</pre></div>
 
 <p><br>
 <a name="AddRemove-a-Docker-Container"></a></p>
@@ -351,22 +386,42 @@ Example: change <code>image: laradock/mysql:0.1.0</code> to <code>image: laradoc
 <a name="Edit-a-Docker-Image"></a></p>
 
 <h4>
-<a id="edit-a-docker-image-change-some-configuration-in-the-image" class="anchor" href="#edit-a-docker-image-change-some-configuration-in-the-image" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Edit a Docker Image (change some configuration in the image)</h4>
+<a id="edit-a-docker-image" class="anchor" href="#edit-a-docker-image" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Edit a Docker Image</h4>
 
-<p>To edit an image, and take full control of it:</p>
+<p>1 - Find the <code>dockerfile</code> of the image you want to edit, 
+<br>
+example for <code>php</code> it will be <code>docker/php/dockerfile</code>.</p>
 
-<ol>
-<li>Clone any Image from <a href="https://github.com/LaraDock">https://github.com/LaraDock</a>
-</li>
-<li>Modify the <code>Dockfile</code>
-</li>
-<li>Run <code>docker build -t {your-image-name} .</code>
-</li>
-</ol>
+<p>2 - Edit the file the way you want.</p>
 
-<p>All the images are open source and hosted on the <a href="https://hub.docker.com/u/laradock/">Docker Hub</a>.</p>
+<p>3 - Re-build the container:</p>
+
+<div class="highlight highlight-source-shell"><pre>docker-compose build</pre></div>
 
 <p><em>If you find any bug or you have and suggestion that can improve the performance of any image, please consider contributing. Thanks in advance.</em></p>
+
+<p><br>
+<a name="Run-Docker-Virtual-Host"></a></p>
+
+<h4>
+<a id="run-a-docker-virtual-host" class="anchor" href="#run-a-docker-virtual-host" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Run a Docker Virtual Host</h4>
+
+<p>These steps are only for <strong>Windows &amp; MAC</strong> users <em>(Linux users don't need a virtual host)</em>:</p>
+
+<p>1 - Run the default Host:</p>
+
+<div class="highlight highlight-source-shell"><pre>docker-machine start default</pre></div>
+
+<ul>
+<li><p>If the host "default" does not exist, create one using the command below, else skip it:</p></li>
+<li>
+<div class="highlight highlight-source-shell"><pre>docker-machine create -d virtualbox default</pre></div>
+
+<p>2 - Run this command to configure your shell:</p>
+</li>
+</ul>
+
+<div class="highlight highlight-source-shell"><pre><span class="pl-c1">eval</span> <span class="pl-s"><span class="pl-pds">$(</span>docker-machine env<span class="pl-pds">)</span></span></pre></div>
 
 <p><br>
 <a name="Find-Docker-IP-Address"></a></p>
@@ -388,24 +443,6 @@ Example: change <code>image: laradock/mysql:0.1.0</code> to <code>image: laradoc
 <p><strong>boot2docker</strong> users: run <code>boot2docker ip</code> <em>(when boot2docker is up)</em>.</p>
 </blockquote>
 
-<p><br>
-<a name="Run-Docker-Virtual-Host"></a></p>
-
-<h4>
-<a id="run-a-docker-virtual-host" class="anchor" href="#run-a-docker-virtual-host" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Run a Docker Virtual Host</h4>
-
-<p>This step is only for <strong>Windows &amp; MAC</strong> users, run the default Host:</p>
-
-<div class="highlight highlight-source-shell"><pre>docker-machine start default</pre></div>
-
-<p>If the host "default" does not exist, create one using the command below, else skip it:</p>
-
-<div class="highlight highlight-source-shell"><pre>docker-machine create -d virtualbox default</pre></div>
-
-<blockquote>
-<p><strong>Note:</strong> Linux users don't need a virtual host, since Docker runs locally on a the machine.</p>
-</blockquote>
-
 <p><br></p>
 
 <h2>
@@ -420,10 +457,10 @@ Example: change <code>image: laradock/mysql:0.1.0</code> to <code>image: laradoc
 
 <p><a href="https://github.com/laradock/laradock/issues">Issues</a> on Github.</p>
 
-<h4>
-<a id="questions" class="anchor" href="#questions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Questions?</h4>
+<h3>
+<a id="questions" class="anchor" href="#questions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Questions?</h3>
 
-<p><a href="https://gitter.im/LaraDock/laradock?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Join the chat at https://gitter.im/LaraDock/laradock"></a> </p>
+<p>If you have any question, send me a direct message on LaraChat, my username is <code>mahmoud_zalt</code>.</p>
 
 <h2>
 <a id="credits" class="anchor" href="#credits" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Credits</h2>
