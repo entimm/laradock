@@ -36,7 +36,17 @@ It's like Laravel Homestead but for Docker instead of Vagrant.</p>
 <a id="contents" class="anchor" href="#contents" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contents</h2>
 
 <ul>
-<li><a href="#Intro">Intro</a></li>
+<li>
+<a href="#Intro">Intro</a>
+
+<ul>
+<li><a href="#features">Features</a></li>
+<li><a href="#what-is-docker">What is Docker</a></li>
+<li><a href="#what-is-laravel">What is Laravel</a></li>
+<li><a href="#why-docker-not-vagrant">Why Docker not Vagrant</a></li>
+<li><a href="#laradock-vs-homestead">LaraDock VS Homestead</a></li>
+</ul>
+</li>
 <li><a href="#Supported-Containers">Supported Containers</a></li>
 <li><a href="#Requirements">Requirements</a></li>
 <li><a href="#Installation">Installation</a></li>
@@ -50,11 +60,11 @@ It's like Laravel Homestead but for Docker instead of Vagrant.</p>
 <li><a href="#Delete-all-existing-Containers">Delete all existing Containers</a></li>
 <li><a href="#Build-Re-build-Containers">Build/Re-build Containers</a></li>
 <li><a href="#Use-Redis">Use Redis</a></li>
-<li><a href="Use-custom-Domain">Use custom Domain</a></li>
 <li><a href="#Change-the-PHP-Version">Change the PHP Version</a></li>
 <li><a href="#AddRemove-a-Docker-Container">Add/Remove a Docker Container</a></li>
 <li><a href="#Add-Docker-Images">Add more Software's (Docker Images)</a></li>
-<li><a href="#Edit-a-Docker-Container">Edit a Docker Container</a></li>
+<li><a href="#Edit-Container">Edit default container configuration</a></li>
+<li><a href="Use-custom-Domain">Use custom Domain</a></li>
 <li><a href="#View-the-Log-files">View the Log files</a></li>
 <li><a href="#Enter-Container">Enter a Container (SSH into a running Container)</a></li>
 <li><a href="#Edit-a-Docker-Image">Edit a Docker Image</a></li>
@@ -72,22 +82,68 @@ It's like Laravel Homestead but for Docker instead of Vagrant.</p>
 <p>LaraDock strives to make the development experience easier.
 It contains pre-packaged Docker Images that provides you a wonderful development environment without requiring you to install PHP, NGINX, MySQL, REDIS, and any other software on your local machine.</p>
 
+<p><a name="features"></a></p>
+
+<h3>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Features</h3>
+
+<ul>
+<li>Easy switch between PHP versions: 7.0 - 5.6 - 5.5 - ...</li>
+<li>Choose your favorite database engine: MySQL - Postgres - Redis - ...</li>
+<li>Run your own combination of software's: PHP - NGINX - MySQL - ...</li>
+<li>Everything runs on a separate container: PHP - NGINX - Postgres - Redis ...</li>
+<li>Easy to customize any container, with simple edit to the <code>dockerfile</code>.</li>
+<li>All Images extends from the official base Image. (Trusted base Images).</li>
+<li>Pre-configured Nginx for Laravel. And very easy to update.</li>
+<li>Using of a Data container, to keep the Data safe and access it anytime.</li>
+<li>Easy to apply configurations inside containers.</li>
+<li>Clean and well structured Docker files (<code>dockerfile</code>).</li>
+<li>Latest version of the Docker Compose file (<code>docker-compose</code>).</li>
+<li>Everything is visible and editable.</li>
+<li>Best practices everywhere.</li>
+</ul>
+
+<p><a name="what-is-docker"></a></p>
+
 <h3>
 <a id="what-is-docker" class="anchor" href="#what-is-docker" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What is Docker?</h3>
 
 <p><a href="https://www.docker.com">Docker</a>  is an open-source project that automates the deployment of applications inside software containers, by providing an additional layer of abstraction and automation of <a href="https://en.wikipedia.org/wiki/Operating-system-level_virtualization">operating-system-level virtualization</a> on Linux, Mac OS and Windows.</p>
+
+<p><a name="what-is-laravel"></a></p>
 
 <h3>
 <a id="what-is-laravel" class="anchor" href="#what-is-laravel" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What is Laravel?</h3>
 
 <p>Seriously!!!</p>
 
+<p><a name="why-docker-not-vagrant"></a></p>
+
 <h3>
 <a id="why-docker-not-vagrant" class="anchor" href="#why-docker-not-vagrant" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Why Docker not Vagrant!?</h3>
 
-<p><a href="https://www.vagrantup.com">Vagrant</a> gives you Virtual Machines in minutes while Docker gives you Virtual Containers in seconds.</p>
+<p><a href="https://www.vagrantup.com">Vagrant</a> creates Virtual Machines in minutes while Docker creates Virtual Containers in seconds.</p>
 
 <p>Instead of providing a full Virtual Machines, like you get with Vagrant, Docker provides you <strong>lightweight</strong> Virtual Containers, that share the same kernel and allow to safely execute independent processes.</p>
+
+<p>In addition to the speed, Docker gives tens of features that cannot be achieved with Vagrant.</p>
+
+<p>Most importantly Docker can run on Development and on Production (same environment everywhere). While Vagrant is designed for Development only, (so you have to re-provision your server on Production every time).</p>
+
+<p><a name="laradock-vs-homestead"></a></p>
+
+<h3>
+<a id="laradock-vs-homestead" class="anchor" href="#laradock-vs-homestead" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>LaraDock VS Homestead</h3>
+
+<p>LaraDock and <a href="https://laravel.com/docs/master/homestead">Homestead</a> both gives you a complete virtual development environments. (Without the need to install and configure every single software on your own Operating System).</p>
+
+<ul>
+<li><p>Homestead is a tool that controls Vagrant for you (using Homestead special commands). And Vagrant manages your Virtual Machine.</p></li>
+<li><p>LaraDock is a tool that controls Docker for you (using Docker Compose official commands). And Docker manages you Virtual Containers.</p></li>
+</ul>
+
+<p>Running a virtual Container is much faster than running a full virtual Machine. 
+<br>Thus <strong>LaraDock is much faster than Homestead</strong>.</p>
 
 <p><a name="Supported-Containers"></a></p>
 
@@ -102,6 +158,8 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 <li>Redis</li>
 <li>Data Volume</li>
 </ul>
+
+<p>Cannot find your container! we would love to have it as well. Consider contributing your container and adding it to the list.</p>
 
 <p><a name="Requirements"></a></p>
 
@@ -229,9 +287,9 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 
 <div class="highlight highlight-source-shell"><pre>docker-compose build</pre></div>
 
-<p>Optionally you can specify which container to rebuild (instead of rebuilding all the containers), example rebuilding <code>PHP</code>:</p>
+<p>Optionally you can specify which container to rebuild (instead of rebuilding all the containers):</p>
 
-<div class="highlight highlight-source-shell"><pre>docker-compose build php</pre></div>
+<div class="highlight highlight-source-shell"><pre>docker-compose build {container-name}</pre></div>
 
 <p><br>
 <a name="Use-Redis"></a></p>
@@ -269,33 +327,7 @@ SESSION_DRIVER=redis
 
 <p>5 - You can manually test it from Laravel with this code:</p>
 
-<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-c1">\</span><span class="pl-c1">Cache</span><span class="pl-k">::</span>store(<span class="pl-s"><span class="pl-pds">'</span>redis<span class="pl-pds">'</span></span>)<span class="pl-k">-&gt;</span>put(<span class="pl-s"><span class="pl-pds">'</span>laradock<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>awesome<span class="pl-pds">'</span></span>, <span class="pl-c1">10</span>);</span></pre></div>
-
-<p><br>
-<a name="Use-custom-Domain"></a></p>
-
-<h4>
-<a id="use-custom-domain-instead-of-the-docker-ip" class="anchor" href="#use-custom-domain-instead-of-the-docker-ip" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Use custom Domain (instead of the Docker IP)</h4>
-
-<p>Assuming your custom domain is <code>laravel.dev</code> and your current <code>Docker-IP</code> is <code>xxx.xxx.xxx.xxx</code>.</p>
-
-<p>1 - Open your <code>/etc/hosts</code> file and map your <code>Docker IP</code> to the <code>laravel.dev</code> domain, by adding the following:</p>
-
-<div class="highlight highlight-source-shell"><pre>xxx.xxx.xxx.xxx    laravel.dev</pre></div>
-
-<p>2 - Open your Laravel's <code>.env</code> file and replace the <code>127.0.0.1</code> default values with your <code>{Docker-IP}</code>.
-<br>
-Example:</p>
-
-<pre lang="env"><code>DB_HOST=xxx.xxx.xxx.xxx
-</code></pre>
-
-<p>3 - Open your browser and visit <code>{http://laravel.dev}</code></p>
-
-<p>Optionally you can define the server name in the nginx config file, like this:</p>
-
-<pre><code>server_name laravel.dev;
-</code></pre>
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-c1">\</span><span class="pl-c1">Cache</span><span class="pl-k">::</span>store(<span class="pl-s"><span class="pl-pds">'</span>redis<span class="pl-pds">'</span></span>)<span class="pl-k">-&gt;</span>put(<span class="pl-s"><span class="pl-pds">'</span>LaraDock<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Awesome<span class="pl-pds">'</span></span>, <span class="pl-c1">10</span>);</span></pre></div>
 
 <p><br>
 <a name="Change-the-PHP-Version"></a></p>
@@ -327,6 +359,10 @@ To change the default PHP version:</p>
 
 <p>For more details visit the <a href="https://hub.docker.com/_/php/">official PHP docker images</a>.</p>
 
+<p>3 - Finally rebuild the container</p>
+
+<div class="highlight highlight-source-shell"><pre>docker-compose build php</pre></div>
+
 <p><br>
 <a name="Add-Docker-Images"></a></p>
 
@@ -336,17 +372,50 @@ To change the default PHP version:</p>
 <p>To add an image (software), just edit the <code>docker-compose.yml</code> and add your container details, to do so you need to be familiar with the <a href="https://docs.docker.com/compose/compose-file/">docker compose file syntax</a>.</p>
 
 <p><br>
-<a name="Edit-a-Docker-Container"></a></p>
+<a name="Edit-Container"></a></p>
 
 <h4>
-<a id="edit-a-docker-container-change-ports-or-volumes" class="anchor" href="#edit-a-docker-container-change-ports-or-volumes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Edit a Docker Container (change Ports or Volumes)</h4>
+<a id="edit-default-container-configuration" class="anchor" href="#edit-default-container-configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Edit default container configuration</h4>
 
-<p>To modify a container you can simply open the <code>docker-compose.yml</code> and change everything you want.</p>
+<p>Open the <code>docker-compose.yml</code> and change anything you want.</p>
 
-<p>Example: if you want to set the MySQL port to 3333, just replace the default port with yours:</p>
+<p>Examples: </p>
+
+<p>Change MySQL Database Name:</p>
+
+<div class="highlight highlight-source-yaml"><pre>  <span class="pl-s"><span class="pl-ent">environment:</span></span>
+    <span class="pl-s"><span class="pl-ent">MYSQL_DATABASE:</span> <span class="pl-s">laradock</span></span></pre></div>
+
+<p>Change Redis defaut port to 1111:</p>
 
 <div class="highlight highlight-source-yaml"><pre>  <span class="pl-s"><span class="pl-ent">ports:</span></span>
-    <span class="pl-s">- <span class="pl-s"><span class="pl-pds">"</span>3333:3306<span class="pl-pds">"</span></span></span></pre></div>
+    <span class="pl-s">- <span class="pl-s"><span class="pl-pds">"</span>1111:6379<span class="pl-pds">"</span></span></span></pre></div>
+
+<p><br>
+<a name="Use-custom-Domain"></a></p>
+
+<h4>
+<a id="use-custom-domain-instead-of-the-docker-ip" class="anchor" href="#use-custom-domain-instead-of-the-docker-ip" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Use custom Domain (instead of the Docker IP)</h4>
+
+<p>Assuming your custom domain is <code>laravel.dev</code> and your current <code>Docker-IP</code> is <code>xxx.xxx.xxx.xxx</code>.</p>
+
+<p>1 - Open your <code>/etc/hosts</code> file and map your <code>Docker IP</code> to the <code>laravel.dev</code> domain, by adding the following:</p>
+
+<div class="highlight highlight-source-shell"><pre>xxx.xxx.xxx.xxx    laravel.dev</pre></div>
+
+<p>2 - Open your Laravel's <code>.env</code> file and replace the <code>127.0.0.1</code> default values with your <code>{Docker-IP}</code>.
+<br>
+Example:</p>
+
+<pre lang="env"><code>DB_HOST=xxx.xxx.xxx.xxx
+</code></pre>
+
+<p>3 - Open your browser and visit <code>{http://laravel.dev}</code></p>
+
+<p>Optionally you can define the server name in the nginx config file, like this:</p>
+
+<pre><code>server_name laravel.dev;
+</code></pre>
 
 <p><br>
 <a name="View-the-Log-files"></a></p>
