@@ -91,13 +91,13 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 <li>Easy switch between PHP versions: 7.0 - 5.6 - 5.5 - ...</li>
 <li>Choose your favorite database engine: MySQL - Postgres - Redis - ...</li>
 <li>Run your own combination of software's: PHP - NGINX - MySQL - ...</li>
-<li>Everything runs on a separate container: PHP - NGINX - Postgres - Redis ...</li>
+<li>Every software runs on a separate container: PHP - NGINX - ...</li>
 <li>Easy to customize any container, with simple edit to the <code>dockerfile</code>.</li>
-<li>All Images extends from the official base Image. (Trusted base Images).</li>
+<li>All Images extends from an official base Image. (Trusted base Images).</li>
 <li>Pre-configured Nginx for Laravel. And very easy to update.</li>
-<li>Using of a Data container, to keep the Data safe and access it anytime.</li>
+<li>Using of a Data container, to keep the Data safe and accessible at anytime.</li>
 <li>Easy to apply configurations inside containers.</li>
-<li>Clean and well structured Docker files (<code>dockerfile</code>).</li>
+<li>Clean and well structured Dockerfiles (<code>dockerfile</code>).</li>
 <li>Latest version of the Docker Compose file (<code>docker-compose</code>).</li>
 <li>Everything is visible and editable.</li>
 <li>Best practices everywhere.</li>
@@ -168,9 +168,24 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 
 <ul>
 <li>Laravel (<a href="https://laravel.com/docs/master/installation">Download</a>)</li>
-<li>Docker Toolbox (<a href="https://www.docker.com/toolbox">Download</a>)</li>
 <li>Git (<a href="https://git-scm.com/downloads">Download</a>)</li>
-<li>Composer (<a href="https://getcomposer.org/download/">Download</a>)</li>
+</ul>
+
+<blockquote>
+<p>For Windows &amp; MAC users only:</p>
+</blockquote>
+
+<ul>
+<li>Docker Toolbox (<a href="https://www.docker.com/toolbox">Download</a>)</li>
+</ul>
+
+<blockquote>
+<p>For Linux users only:</p>
+</blockquote>
+
+<ul>
+<li>Docker Engine (<a href="https://docs.docker.com/engine/installation/linux/ubuntulinux/#install">Install</a>)</li>
+<li>Docker Compose (<a href="https://docs.docker.com/compose/install">Install</a>)</li>
 </ul>
 
 <p><a name="Installation"></a></p>
@@ -195,11 +210,7 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 <h2>
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
 
-<blockquote>
-<p><strong>(Windows &amp; MAC users)</strong> Make sure you have a running Docker Virtual Host on your machine first. 
-<br>
-<a href="#Run-Docker-Virtual-Host">How to run a Docker Virtual Host?</a></p>
-</blockquote>
+<p>0 - For <strong>Windows &amp; MAC</strong> users only: make sure you have a running Docker Virtual Host on your machine. <a href="#Run-Docker-Virtual-Host">How to run a Docker Virtual Host?</a>. (<strong>Linux</strong> users don't need a Virtual Host, so skip this step).</p>
 
 <p><br>
 1 - Open your Laravel's <code>.env</code> file and set the <code>DB_HOST</code> to your <code>{Docker-IP}</code>:</p>
