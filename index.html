@@ -12,7 +12,7 @@
   <body>
     <section class="page-header">
       <h1 class="project-name">LaraDock</h1>
-      <h2 class="project-tagline">Like Laravel Homstead but for Docker instead of Vagrant.</h2>
+      <h2 class="project-tagline">Like Laravel Homestead but for Docker instead of Vagrant.</h2>
       <a href="https://github.com/LaraDock/laradock" class="btn">View on GitHub</a>
       <a href="https://github.com/LaraDock/laradock/zipball/master" class="btn">Download .zip</a>
       <a href="https://github.com/LaraDock/laradock/tarball/master" class="btn">Download .tar.gz</a>
@@ -22,7 +22,7 @@
       <h1>
 <a id="laradock" class="anchor" href="#laradock" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>LaraDock</h1>
 
-<p><a href="http://www.zalt.me"><img src="http://forthebadge.com/images/badges/built-with-love.svg" alt="forthebadge"></a></p>
+<p><a href="http://zalt.me"><img src="http://forthebadge.com/images/badges/built-by-developers.svg" alt="forthebadge"></a></p>
 
 <p>LaraDock helps you run your <strong>Laravel</strong> App on <strong>Docker</strong> real quick.
 <br>
@@ -153,9 +153,12 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 <ul>
 <li>PHP (7.0 - 5.6 - 5.5)</li>
 <li>NGINX</li>
+<li>Redis</li>
 <li>MySQL</li>
 <li>PostgreSQL</li>
-<li>Redis</li>
+<li>MariaDB</li>
+<li>Beanstalkd</li>
+<li>Beanstalkd Console</li>
 <li>Data Volume</li>
 </ul>
 
@@ -202,7 +205,7 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 
 <div class="highlight highlight-source-shell"><pre>git clone https://github.com/LaraDock/laradock.git docker</pre></div>
 
-<p>Instead of <code>git clone</code> you can use <code>git submodule add</code> in case you are already using Git for your Laravel project <em>(Recommended)</em>:</p>
+<p>You can use <code>git submodule add</code> instead of <code>git clone</code> if you are already using Git for your Laravel project <em>(Recommended)</em>:</p>
 
 <div class="highlight highlight-source-shell"><pre>git submodule add https://github.com/LaraDock/laradock.git docker</pre></div>
 
@@ -216,7 +219,7 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
 
 <p>0 - For <strong>Windows &amp; MAC</strong> users only: make sure you have a running Docker Virtual Host on your machine. 
-(<strong>Linux</strong> users don't need a Virtual Host, so skip this step)
+(<strong>Linux</strong> users don't need a Virtual Host, so skip this step).
 <br>
 <a href="#Run-Docker-Virtual-Host">How to run a Docker Virtual Host?</a></p>
 
@@ -237,7 +240,7 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 <p>Running PHP, NGINX and MySQL:</p>
 </blockquote>
 
-<div class="highlight highlight-source-shell"><pre>docker-compose up -d   php nginx mysql</pre></div>
+<div class="highlight highlight-source-shell"><pre>docker-compose up -d   php nginx mysql redis</pre></div>
 
 <p>Note: you can choose your own combination of software's (containers), another example:</p>
 
@@ -245,9 +248,9 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 <p>Running PHP, NGINX, Postgres and Redis:</p>
 </blockquote>
 
-<div class="highlight highlight-source-shell"><pre>docker-compose up -d   php nginx postgres redis</pre></div>
+<div class="highlight highlight-source-shell"><pre>docker-compose up -d   php nginx beanstalkd postgres</pre></div>
 
-<p>Supported Containers: <code>php</code>, <code>nginx</code>, <code>mysql</code>, <code>postgres</code>, <code>redis</code>, <code>data</code>.</p>
+<p>Supported Containers: <code>nginx</code>, <code>mysql</code>, <code>redis</code>, <code>postgres</code>, <code>mariadb</code>, <code>beanstalkd</code>, <code>beanstalkd-console</code>, <code>data</code>, <code>php</code>.</p>
 
 <p><br>
 3 - Open your browser and visit your <code>{Docker-IP}</code> address (<code>http://xxx.xxx.xxx.xxx</code>).</p>
@@ -284,7 +287,7 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 
 <p>To stop single container do:</p>
 
-<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-c1">docker</span><span class="pl-k">-</span><span class="pl-c1">compose</span> <span class="pl-c1">stop</span> {<span class="pl-c1">container</span><span class="pl-k">-</span><span class="pl-c1">name</span>}</span></pre></div>
+<div class="highlight highlight-source-shell"><pre>docker-compose stop {container-name}</pre></div>
 
 <p><br>
 <a name="Delete-all-existing-Containers"></a></p>
@@ -452,15 +455,11 @@ Example:</p>
 
 <p>1 - first list the current running containers with <code>docker ps</code></p>
 
-<p>2 - enter any container with:</p>
+<p>2 - enter any container using:</p>
 
-<p>Example: enter the <code>php</code> container</p>
+<div class="highlight highlight-source-shell"><pre>docker <span class="pl-c1">exec</span> -it {container-name-or-id} bash</pre></div>
 
-<div class="highlight highlight-source-shell"><pre>docker <span class="pl-c1">exec</span> -it php bash</pre></div>
-
-<p>Example: enter the <code>nginx</code> container</p>
-
-<div class="highlight highlight-source-shell"><pre>docker <span class="pl-c1">exec</span> -it nginx bash</pre></div>
+<p>3 - to exit a container, type <code>exit</code>.</p>
 
 <p><br>
 <a name="AddRemove-a-Docker-Container"></a></p>
