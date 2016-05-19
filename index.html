@@ -41,13 +41,13 @@ It's like Laravel Homestead but for Docker instead of Vagrant.</p>
 
 <ul>
 <li><a href="#features">Features</a></li>
+<li><a href="#Supported-Containers">Supported Containers</a></li>
 <li><a href="#what-is-docker">What is Docker</a></li>
 <li><a href="#what-is-laravel">What is Laravel</a></li>
 <li><a href="#why-docker-not-vagrant">Why Docker not Vagrant</a></li>
 <li><a href="#laradock-vs-homestead">LaraDock VS Homestead</a></li>
 </ul>
 </li>
-<li><a href="#Supported-Containers">Supported Containers</a></li>
 <li><a href="#Requirements">Requirements</a></li>
 <li><a href="#Installation">Installation</a></li>
 <li><a href="#Usage">Usage</a></li>
@@ -55,24 +55,50 @@ It's like Laravel Homestead but for Docker instead of Vagrant.</p>
 <a href="#Documentation">Documentation</a>
 
 <ul>
+<li>
+<a href="#Docker">Docker</a>
+
+<ul>
 <li><a href="#List-current-running-Containers">List current running Containers</a></li>
 <li><a href="#Close-all-running-Containers">Close all running Containers</a></li>
 <li><a href="#Delete-all-existing-Containers">Delete all existing Containers</a></li>
-<li><a href="#Build-Re-build-Containers">Build/Re-build Containers</a></li>
-<li><a href="#Run-Artisan-Commands">Run Artisan Commands</a></li>
-<li><a href="#Change-the-PHP-Version">Change the PHP Version</a></li>
-<li><a href="#AddRemove-a-Docker-Container">Add/Remove a Docker Container</a></li>
-<li><a href="#Add-Docker-Images">Add more Software's (Docker Images)</a></li>
-<li><a href="#Edit-Container">Edit default container configuration</a></li>
-<li><a href="#Use-custom-Domain">Use custom Domain</a></li>
-<li><a href="#View-the-Log-files">View the Log files</a></li>
-<li><a href="#Use-Redis">Use Redis</a></li>
 <li><a href="#Enter-Container">Enter a Container (SSH into a running Container)</a></li>
+<li><a href="#Edit-Container">Edit default container configuration</a></li>
 <li><a href="#Edit-a-Docker-Image">Edit a Docker Image</a></li>
-<li><a href="#Run-Docker-Virtual-Host">Run a Docker Virtual Host</a></li>
-<li><a href="#Find-Docker-IP-Address">Find your Docker IP Address</a></li>
+<li><a href="#Build-Re-build-Containers">Build/Re-build Containers</a></li>
+<li><a href="#Add-Docker-Images">Add more Software's (Docker Images)</a></li>
+<li><a href="#View-the-Log-files">View the Log files</a></li>
 </ul>
 </li>
+<li>
+<a href="#Laravel">Laravel</a>:
+
+<ul>
+<li><a href="#Run-Artisan-Commands">Run Artisan Commands</a></li>
+<li><a href="#Use-Redis">Use Redis</a></li>
+</ul>
+</li>
+<li>
+<a href="#PHP">PHP</a>
+
+<ul>
+<li><a href="#Install-PHP-Extensions">Install PHP Extensions</a></li>
+<li><a href="#Change-the-PHP-FPM-Version">Change the PHP-FPM Version</a></li>
+<li><a href="#Change-the-PHP-CLI-Version">Change the PHP-CLI Version</a></li>
+</ul>
+</li>
+<li>
+<a href="#Misc">Misc</a>
+
+<ul>
+<li><a href="#Run-Docker-Virtual-Host">Run a Docker Virtual Host</a></li>
+<li><a href="#Find-Docker-IP-Address">Find your Docker IP Address</a></li>
+<li><a href="#Use-custom-Domain">Use custom Domain</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#Help">Help &amp; Questions</a></li>
 </ul>
 
 <p><a name="Intro"></a></p>
@@ -109,8 +135,8 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 
 <p><a name="Supported-Containers"></a></p>
 
-<h2>
-<a id="supported-containers" class="anchor" href="#supported-containers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Supported Containers</h2>
+<h3>
+<a id="supported-containers" class="anchor" href="#supported-containers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Supported Containers</h3>
 
 <ul>
 <li>PHP-FPM (7.0 - 5.6 - 5.5)</li>
@@ -122,7 +148,7 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 <li>Memcached</li>
 <li>Beanstalkd</li>
 <li>Beanstalkd Console</li>
-<li>Workspace (includes: Composer, PHP7-CLI, Laravel Installer, Git, Vim, Nano and cURL)</li>
+<li>Workspace (contains: Composer, PHP7-CLI, Laravel Installer, Git, Node, Gulp, Bower, SQLite,  Vim, Nano and cURL)</li>
 <li>Data Volume <em>(Databases Data Container)</em>
 </li>
 <li>Application <em>(Application Code Container)</em>
@@ -223,6 +249,8 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 
 <p><em>If you are not already using Git for your Laravel project, you can use <code>git clone</code> instead of <code>git submodule</code>.</em></p>
 
+<p><br></p>
+
 <h4>
 <a id="b---from-scratch-install-laradock-and-laravel" class="anchor" href="#b---from-scratch-install-laradock-and-laravel" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>B - From scratch (Install LaraDock and Laravel):</h4>
 
@@ -300,15 +328,16 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 
 <div class="highlight highlight-source-shell"><pre>sudo chmod -R 777 storage <span class="pl-k">&amp;&amp;</span> sudo chmod -R 777 bootstrap/cache</pre></div>
 
-<p><br></p>
-
-<p><a href="https://twitter.com/Mahmoud_Zalt">Follow @Mahmoud_Zalt</a></p>
-
 <p><br>
 <a name="Documentation"></a></p>
 
 <h2>
 <a id="documentation" class="anchor" href="#documentation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Documentation</h2>
+
+<p><a name="Docker"></a></p>
+
+<h3>
+<a id="docker" class="anchor" href="#docker" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Docker</h3>
 
 <p><a name="List-current-running-Containers"></a></p>
 
@@ -344,6 +373,58 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 <p><em>Note: Careful with this command as it will delete your Data Volume Container as well. (if you want to keep your Database data than you should stop each container by itself as follow):</em> </p>
 
 <p><br>
+<a name="Enter-Container"></a></p>
+
+<h4>
+<a id="enter-a-container-ssh-into-a-running-container" class="anchor" href="#enter-a-container-ssh-into-a-running-container" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Enter a Container (SSH into a running Container)</h4>
+
+<p>1 - first list the current running containers with <code>docker ps</code></p>
+
+<p>2 - enter any container using:</p>
+
+<div class="highlight highlight-source-shell"><pre>docker <span class="pl-c1">exec</span> -it {container-name} bash</pre></div>
+
+<p>3 - to exit a container, type <code>exit</code>.</p>
+
+<p><br>
+<a name="Edit-Container"></a></p>
+
+<h4>
+<a id="edit-default-container-configuration" class="anchor" href="#edit-default-container-configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Edit default container configuration</h4>
+
+<p>Open the <code>docker-compose.yml</code> and change anything you want.</p>
+
+<p>Examples: </p>
+
+<p>Change MySQL Database Name:</p>
+
+<div class="highlight highlight-source-yaml"><pre>  <span class="pl-s"><span class="pl-ent">environment:</span></span>
+    <span class="pl-s"><span class="pl-ent">MYSQL_DATABASE:</span> <span class="pl-s">laradock</span></span></pre></div>
+
+<p>Change Redis defaut port to 1111:</p>
+
+<div class="highlight highlight-source-yaml"><pre>  <span class="pl-s"><span class="pl-ent">ports:</span></span>
+    <span class="pl-s">- <span class="pl-s"><span class="pl-pds">"</span>1111:6379<span class="pl-pds">"</span></span></span></pre></div>
+
+<p><br>
+<a name="Edit-a-Docker-Image"></a></p>
+
+<h4>
+<a id="edit-a-docker-image" class="anchor" href="#edit-a-docker-image" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Edit a Docker Image</h4>
+
+<p>1 - Find the <code>dockerfile</code> of the image you want to edit, 
+<br>
+example for <code>mysql</code> it will be <code>mysql/Dockerfile</code>.</p>
+
+<p>2 - Edit the file the way you want.</p>
+
+<p>3 - Re-build the container:</p>
+
+<div class="highlight highlight-source-shell"><pre>docker-compose build mysql</pre></div>
+
+<p><em>If you find any bug or you have and suggestion that can improve the performance of any image, please consider contributing. Thanks in advance.</em></p>
+
+<p><br>
 <a name="Build-Re-build-Containers"></a></p>
 
 <h4>
@@ -358,7 +439,32 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 <div class="highlight highlight-source-shell"><pre>docker-compose build {container-name}</pre></div>
 
 <p><br>
-<a name="Run-Artisan-Commands"></a></p>
+<a name="Add-Docker-Images"></a></p>
+
+<h4>
+<a id="add-more-softwares-docker-images" class="anchor" href="#add-more-softwares-docker-images" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Add more Software's (Docker Images)</h4>
+
+<p>To add an image (software), just edit the <code>docker-compose.yml</code> and add your container details, to do so you need to be familiar with the <a href="https://docs.docker.com/compose/compose-file/">docker compose file syntax</a>.</p>
+
+<p><br>
+<a name="View-the-Log-files"></a></p>
+
+<h4>
+<a id="view-the-log-files" class="anchor" href="#view-the-log-files" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>View the Log files</h4>
+
+<p>The Nginx Log file is stored in the <code>logs/nginx</code> directory.</p>
+
+<p>However to view the logs of all the other containers (MySQL, PHP-FPM,...) you can run this:</p>
+
+<div class="highlight highlight-source-shell"><pre>docker logs {container-name}</pre></div>
+
+<p><br>
+<a name="Laravel"></a></p>
+
+<h3>
+<a id="laravel" class="anchor" href="#laravel" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Laravel</h3>
+
+<p><a name="Run-Artisan-Commands"></a></p>
 
 <h4>
 <a id="run-artisan-commands" class="anchor" href="#run-artisan-commands" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Run Artisan Commands</h4>
@@ -386,115 +492,6 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 <div class="highlight highlight-source-shell"><pre>phpunit</pre></div>
 
 <div class="highlight highlight-source-shell"><pre>laravel new blog</pre></div>
-
-<p><br>
-<a name="Change-the-PHP-Version"></a></p>
-
-<h4>
-<a id="change-the-php-version" class="anchor" href="#change-the-php-version" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Change the PHP Version</h4>
-
-<p>By default <strong>PHP 7.0</strong> is running.
-<br>
-To change the default PHP version:</p>
-
-<p>1 - Open the <code>docker-compose.yml</code>.</p>
-
-<p>2 - Search for <code>Dockerfile-70</code> in the PHP container section.</p>
-
-<p>3 - Change the version number. 
-<br>
-Example to select version 5.6 instead of 7.0 you have to replace <code>Dockerfile-70</code> with <code>Dockerfile-56</code>.</p>
-
-<p>Sample: </p>
-
-<pre lang="txt"><code>php-fpm:
-    build:
-        context: ./php-fpm
-        dockerfile: Dockerfile-70
-</code></pre>
-
-<p>Supported Versions:</p>
-
-<ul>
-<li>For (PHP 7.0.*) use <code>Dockerfile-70</code>
-</li>
-<li>For (PHP 5.6.*) use <code>Dockerfile-56</code>
-</li>
-<li>For (PHP 5.5.*) use <code>Dockerfile-55</code>
-</li>
-</ul>
-
-<p>4 - Finally rebuild the container</p>
-
-<div class="highlight highlight-source-shell"><pre>docker-compose build php</pre></div>
-
-<p>For more details about the PHP base image, visit the <a href="https://hub.docker.com/_/php/">official PHP docker images</a>.</p>
-
-<p><br>
-<a name="Add-Docker-Images"></a></p>
-
-<h4>
-<a id="add-more-softwares-docker-images" class="anchor" href="#add-more-softwares-docker-images" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Add more Software's (Docker Images)</h4>
-
-<p>To add an image (software), just edit the <code>docker-compose.yml</code> and add your container details, to do so you need to be familiar with the <a href="https://docs.docker.com/compose/compose-file/">docker compose file syntax</a>.</p>
-
-<p><br>
-<a name="Edit-Container"></a></p>
-
-<h4>
-<a id="edit-default-container-configuration" class="anchor" href="#edit-default-container-configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Edit default container configuration</h4>
-
-<p>Open the <code>docker-compose.yml</code> and change anything you want.</p>
-
-<p>Examples: </p>
-
-<p>Change MySQL Database Name:</p>
-
-<div class="highlight highlight-source-yaml"><pre>  <span class="pl-s"><span class="pl-ent">environment:</span></span>
-    <span class="pl-s"><span class="pl-ent">MYSQL_DATABASE:</span> <span class="pl-s">laradock</span></span></pre></div>
-
-<p>Change Redis defaut port to 1111:</p>
-
-<div class="highlight highlight-source-yaml"><pre>  <span class="pl-s"><span class="pl-ent">ports:</span></span>
-    <span class="pl-s">- <span class="pl-s"><span class="pl-pds">"</span>1111:6379<span class="pl-pds">"</span></span></span></pre></div>
-
-<p><br>
-<a name="Use-custom-Domain"></a></p>
-
-<h4>
-<a id="use-custom-domain-instead-of-the-docker-ip" class="anchor" href="#use-custom-domain-instead-of-the-docker-ip" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Use custom Domain (instead of the Docker IP)</h4>
-
-<p>Assuming your custom domain is <code>laravel.dev</code> and your current <code>Docker-IP</code> is <code>xxx.xxx.xxx.xxx</code>.</p>
-
-<p>1 - Open your <code>/etc/hosts</code> file and map your <code>Docker IP</code> to the <code>laravel.dev</code> domain, by adding the following:</p>
-
-<div class="highlight highlight-source-shell"><pre>xxx.xxx.xxx.xxx    laravel.dev</pre></div>
-
-<p>2 - Open your Laravel's <code>.env</code> file and replace the <code>127.0.0.1</code> default values with your <code>{Docker-IP}</code>.
-<br>
-Example:</p>
-
-<pre lang="env"><code>DB_HOST=xxx.xxx.xxx.xxx
-</code></pre>
-
-<p>3 - Open your browser and visit <code>{http://laravel.dev}</code></p>
-
-<p>Optionally you can define the server name in the nginx config file, like this:</p>
-
-<pre lang="conf"><code>server_name laravel.dev;
-</code></pre>
-
-<p><br>
-<a name="View-the-Log-files"></a></p>
-
-<h4>
-<a id="view-the-log-files" class="anchor" href="#view-the-log-files" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>View the Log files</h4>
-
-<p>The Nginx Log file is stored in the <code>logs/nginx</code> directory.</p>
-
-<p>However to view the logs of all the other containers (MySQL, PHP-FPM,...) you can run this:</p>
-
-<div class="highlight highlight-source-shell"><pre>docker logs {container-name}</pre></div>
 
 <p><br>
 <a name="Use-Redis"></a></p>
@@ -535,47 +532,90 @@ SESSION_DRIVER=redis
 <div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-c1">\</span><span class="pl-c1">Cache</span><span class="pl-k">::</span>store(<span class="pl-s"><span class="pl-pds">'</span>redis<span class="pl-pds">'</span></span>)<span class="pl-k">-&gt;</span>put(<span class="pl-s"><span class="pl-pds">'</span>LaraDock<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Awesome<span class="pl-pds">'</span></span>, <span class="pl-c1">10</span>);</span></pre></div>
 
 <p><br>
-<a name="Enter-Container"></a></p>
+<a name="PHP"></a></p>
+
+<h3>
+<a id="php" class="anchor" href="#php" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>PHP</h3>
+
+<p><a name="Install-PHP-Extensions"></a></p>
 
 <h4>
-<a id="enter-a-container-ssh-into-a-running-container" class="anchor" href="#enter-a-container-ssh-into-a-running-container" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Enter a Container (SSH into a running Container)</h4>
+<a id="install-php-extensions" class="anchor" href="#install-php-extensions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install PHP Extensions</h4>
 
-<p>1 - first list the current running containers with <code>docker ps</code></p>
+<p>Before installing PHP extensions, you have to decide whether you need for the <code>FPM</code> or <code>CLI</code> because each lives on a different container, if you need it for both you have to edit both containers.</p>
 
-<p>2 - enter any container using:</p>
-
-<div class="highlight highlight-source-shell"><pre>docker <span class="pl-c1">exec</span> -it {container-name} bash</pre></div>
-
-<p>3 - to exit a container, type <code>exit</code>.</p>
-
-<p><br>
-<a name="AddRemove-a-Docker-Container"></a></p>
-
-<h4>
-<a id="addremove-a-docker-container" class="anchor" href="#addremove-a-docker-container" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Add/Remove a Docker Container</h4>
-
-<p>To prevent a container (software) from running, open the <code>docker-compose.yml</code> file, and comment out the container section or remove it entirely.</p>
-
-<p><br>
-<a name="Edit-a-Docker-Image"></a></p>
-
-<h4>
-<a id="edit-a-docker-image" class="anchor" href="#edit-a-docker-image" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Edit a Docker Image</h4>
-
-<p>1 - Find the <code>dockerfile</code> of the image you want to edit, 
+<p>The PHP-FPM extensions should be installed in <code>php-fpm/Dockerfile-XX</code>. <em>(replace XX with your default PHP version number)</em>.
 <br>
-example for <code>php</code> it will be <code>docker/php/dockerfile</code>.</p>
-
-<p>2 - Edit the file the way you want.</p>
-
-<p>3 - Re-build the container:</p>
-
-<div class="highlight highlight-source-shell"><pre>docker-compose build</pre></div>
-
-<p><em>If you find any bug or you have and suggestion that can improve the performance of any image, please consider contributing. Thanks in advance.</em></p>
+The PHP-CLI extensions should be installed in <code>workspace/Dockerfile</code>.</p>
 
 <p><br>
-<a name="Run-Docker-Virtual-Host"></a></p>
+<a name="Change-the-PHP-FPM-Version"></a></p>
+
+<h4>
+<a id="change-the-php-fpm-version" class="anchor" href="#change-the-php-fpm-version" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Change the PHP-FPM Version</h4>
+
+<p>By default <strong>PHP-FPM 7.0</strong> is running.</p>
+
+<blockquote>
+<p>The PHP-FPM is responsible of serving your application code, you don't have to change the PHP-CLI version if you are planing to run your application on different PHP-FPM version.</p>
+</blockquote>
+
+<p>1 - Open the <code>docker-compose.yml</code>.</p>
+
+<p>2 - Search for <code>Dockerfile-70</code> in the PHP container section.</p>
+
+<p>3 - Change the version number. 
+<br>
+Example to select version 5.6 instead of 7.0 you have to replace <code>Dockerfile-70</code> with <code>Dockerfile-56</code>.</p>
+
+<p>Sample: </p>
+
+<pre lang="txt"><code>php-fpm:
+    build:
+        context: ./php-fpm
+        dockerfile: Dockerfile-70
+</code></pre>
+
+<p>Supported Versions:</p>
+
+<ul>
+<li>For (PHP 7.0.*) use <code>Dockerfile-70</code>
+</li>
+<li>For (PHP 5.6.*) use <code>Dockerfile-56</code>
+</li>
+<li>For (PHP 5.5.*) use <code>Dockerfile-55</code>
+</li>
+</ul>
+
+<p>4 - Finally rebuild the container</p>
+
+<div class="highlight highlight-source-shell"><pre>docker-compose build php</pre></div>
+
+<p>For more details about the PHP base image, visit the <a href="https://hub.docker.com/_/php/">official PHP docker images</a>.</p>
+
+<p><br>
+<a name="Change-the-PHP-CLI-Version"></a></p>
+
+<h4>
+<a id="change-the-php-cli-version" class="anchor" href="#change-the-php-cli-version" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Change the PHP-CLI Version</h4>
+
+<p>By default <strong>PHP-CLI 7.0</strong> is running.</p>
+
+<blockquote>
+<p>Note: it's not very essential to edit the PHP-CLI verion. The PHP-CLI is only used for the Artisan Commands &amp; Composer. It doesn't serve your Application code, this is the PHP-FPM job.</p>
+</blockquote>
+
+<p>The PHP-CLI is installed in the Workspace container. To change the PHP-CLI version you need to edit the <code>workspace/Dockerfile</code>.</p>
+
+<p>Right now you have to manually edit the <code>Dockerfile</code> or create a new one like it's done for the PHP-FPM. (consider contributing).</p>
+
+<p><br>
+<a name="Misc"></a></p>
+
+<h3>
+<a id="misc" class="anchor" href="#misc" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Misc</h3>
+
+<p><a name="Run-Docker-Virtual-Host"></a></p>
 
 <h4>
 <a id="run-a-docker-virtual-host" class="anchor" href="#run-a-docker-virtual-host" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Run a Docker Virtual Host</h4>
@@ -607,45 +647,98 @@ example for <code>php</code> it will be <code>docker/php/dockerfile</code>.</p>
 
 <div class="highlight highlight-source-shell"><pre>docker-machine ip default</pre></div>
 
+<p>If your Host name is different then <code>default</code>, you have to specify it (<code>docker-machine ip my-host</code>).</p>
+
 <p><em>(The default IP is 192.168.99.100)</em></p>
-
-<p><strong>On Linux:</strong> </p>
-
-<p>Your IP Address is <code>127.0.0.1</code></p>
 
 <blockquote>
 <p><strong>boot2docker</strong> users: run <code>boot2docker ip</code> <em>(when boot2docker is up)</em>.</p>
 </blockquote>
+
+<p><br>
+<strong>On Linux:</strong> </p>
+
+<p>1 - Run <code>ifconfig</code> in the terminal.</p>
+
+<p>2 - In the result search for <code>docker0</code>, your IP address will be next to <code>inet addr</code>.</p>
+
+<p>Example: (In this example your IP address is <code>172.17.0.1</code>).</p>
+
+<div class="highlight highlight-source-shell"><pre>docker0   Link encap:Ethernet  HWaddr 02:42:41:2d:c4:24
+          inet addr:172.17.0.1  Bcast:0.0.0.0  Mask:255.255.0.0
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)</pre></div>
+
+<blockquote>
+<p>If you have an easier way to do it, share it with us.</p>
+</blockquote>
+
+<p><br>
+<a name="Use-custom-Domain"></a></p>
+
+<h4>
+<a id="use-custom-domain-instead-of-the-docker-ip" class="anchor" href="#use-custom-domain-instead-of-the-docker-ip" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Use custom Domain (instead of the Docker IP)</h4>
+
+<p>Assuming your custom domain is <code>laravel.dev</code> and your current <code>Docker-IP</code> is <code>xxx.xxx.xxx.xxx</code>.</p>
+
+<p>1 - Open your <code>/etc/hosts</code> file and map your <code>Docker IP</code> to the <code>laravel.dev</code> domain, by adding the following:</p>
+
+<div class="highlight highlight-source-shell"><pre>xxx.xxx.xxx.xxx    laravel.dev</pre></div>
+
+<p>2 - Open your Laravel's <code>.env</code> file and replace the <code>127.0.0.1</code> default values with your <code>{Docker-IP}</code>.
+<br>
+Example:</p>
+
+<pre lang="env"><code>DB_HOST=xxx.xxx.xxx.xxx
+</code></pre>
+
+<p>3 - Open your browser and visit <code>{http://laravel.dev}</code></p>
+
+<p>Optionally you can define the server name in the nginx config file, like this:</p>
+
+<pre lang="conf"><code>server_name laravel.dev;
+</code></pre>
 
 <p><br></p>
 
 <h2>
 <a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contributing</h2>
 
-<p>This little project was built by one man who has a full time job and many responsibilities, so if you like this project and you find that it needs a bug fix or support for new software or upgrade for the current containers, or anything else.. Do not hesitate to contribute, you are more than welcome :)</p>
-
-<p>All Docker Images can be found at <a href="https://github.com/LaraDock">https://github.com/LaraDock</a></p>
+<p>This little project was built by one man who has a full time job and many responsibilities, so if you like this project and you find that it needs a bug fix or support for new software or upgrade any container, or anything else.. Do not hesitate to contribute, you are more than welcome :)</p>
 
 <h2>
 <a id="support" class="anchor" href="#support" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Support</h2>
 
-<p><a href="https://github.com/laradock/laradock/issues">Issues</a> on Github.</p>
+<p>To suggest a features or report a bug, open a new <a href="https://github.com/laradock/laradock/issues">Issue</a>.</p>
 
-<h3>
-<a id="questions" class="anchor" href="#questions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Questions?</h3>
+<p><a name="Help"></a></p>
 
-<p>If you have any question, send me a direct message on LaraChat, my username is <code>mahmoud_zalt</code>.</p>
+<h2>
+<a id="help--questions" class="anchor" href="#help--questions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Help &amp; Questions</h2>
+
+<p>If you need help with anything related to this project, shedule a live call with me on <a href="https://www.codementor.io/mahmoudz">Codementor</a>, I'd love to help.</p>
+
+<p>If you have a short question, send me a direct message on LaraChat, my username is <code>mahmoud_zalt</code>.</p>
 
 <h2>
 <a id="credits" class="anchor" href="#credits" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Credits</h2>
 
 <p><a href="http://www.zalt.me"><img src="https://img.shields.io/badge/Author-Mahmoud%20Zalt-orange.svg" alt="Mahmoud Zalt"></a></p>
 
+<p>Twitter: <a href="https://twitter.com/Mahmoud_Zalt">@Mahmoud_Zalt</a>
+<br>
+Website: <a href="http://zalt.me">http://zalt.me</a>
+<br>
+Email: <code>mahmoud@zalt.me</code></p>
+
 <h2>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
 
-<p><a href="https://github.com/laradock/laradock/blob/master/LICENSE">MIT License (MIT)</a>
-<a href="%5B%5D()"></a></p>
+<p><a href="https://github.com/laradock/laradock/blob/master/LICENSE">MIT License</a>
+<a href="%5B%5D()"></a> (MIT)</p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/LaraDock/laradock">LaraDock</a> is maintained by <a href="https://github.com/LaraDock">LaraDock</a>.</span>
