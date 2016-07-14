@@ -28,6 +28,10 @@
 <br>
 It's like Laravel Homestead but for Docker instead of Vagrant.</p>
 
+<blockquote>
+<p>With LaraDock, use Docker first and learn about it later.</p>
+</blockquote>
+
 <p><img src="http://s18.postimg.org/fhykchl09/new_laradock_cover.png" alt=""></p>
 
 <p><br></p>
@@ -48,6 +52,7 @@ It's like Laravel Homestead but for Docker instead of Vagrant.</p>
 <li><a href="#laradock-vs-homestead">LaraDock VS Homestead</a></li>
 </ul>
 </li>
+<li><a href="#Demo">Demo Video</a></li>
 <li><a href="#Requirements">Requirements</a></li>
 <li><a href="#Installation">Installation</a></li>
 <li><a href="#Usage">Usage</a></li>
@@ -74,8 +79,10 @@ It's like Laravel Homestead but for Docker instead of Vagrant.</p>
 <a href="#Laravel">Laravel</a>:
 
 <ul>
+<li><a href="#Install-Laravel">Install Laravel from a Docker Container</a></li>
 <li><a href="#Run-Artisan-Commands">Run Artisan Commands</a></li>
 <li><a href="#Use-Redis">Use Redis</a></li>
+<li><a href="#Use-Mongo">Use Mongo</a></li>
 </ul>
 </li>
 <li>
@@ -94,6 +101,8 @@ It's like Laravel Homestead but for Docker instead of Vagrant.</p>
 <li><a href="#Run-Docker-Virtual-Host">Run a Docker Virtual Host</a></li>
 <li><a href="#Find-Docker-IP-Address">Find your Docker IP Address</a></li>
 <li><a href="#Use-custom-Domain">Use custom Domain</a></li>
+<li><a href="#Install-Prestissimo">Install Prestissimo</a></li>
+<li><a href="#debugging">Debugging</a></li>
 </ul>
 </li>
 </ul>
@@ -109,9 +118,9 @@ It's like Laravel Homestead but for Docker instead of Vagrant.</p>
 <p>LaraDock strives to make the development experience easier.
 It contains pre-packaged Docker Images that provides you a wonderful development environment without requiring you to install PHP, NGINX, MySQL, REDIS, and any other software on your local machine.</p>
 
-<p><strong>Usage Overview:</strong> Run <code>NGINX</code> and <code>MySQL</code>.</p>
+<p><strong>Usage Overview:</strong> Run <code>NGINX</code>, <code>MySQL</code> and <code>Redis</code>.</p>
 
-<div class="highlight highlight-source-shell"><pre>docker-compose up  nginx mysql </pre></div>
+<div class="highlight highlight-source-shell"><pre>docker-compose up  nginx mysql redis</pre></div>
 
 <p><a name="features"></a></p>
 
@@ -144,12 +153,14 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 <li>MySQL</li>
 <li>PostgreSQL</li>
 <li>MariaDB</li>
+<li>Neo4j</li>
+<li>MongoDB</li>
 <li>Redis</li>
 <li>Memcached</li>
 <li>Beanstalkd</li>
 <li>Beanstalkd Console</li>
-<li>Workspace (contains: Composer, PHP7-CLI, Laravel Installer, Git, Node, Gulp, Bower, SQLite,  Vim, Nano and cURL)</li>
-<li>Data Volume <em>(Databases Data Container)</em>
+<li>Workspace (contains: Composer, PHP7-CLI, Laravel Installer, Git, Node, Gulp, Bower, SQLite,  Vim, Nano, cURL and much more)</li>
+<li>Data <em>(Databases Data Container)</em>
 </li>
 <li>Application <em>(Application Code Container)</em>
 </li>
@@ -164,7 +175,7 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 <h3>
 <a id="what-is-docker" class="anchor" href="#what-is-docker" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What is Docker?</h3>
 
-<p><a href="https://www.docker.com">Docker</a>  is an open-source project that automates the deployment of applications inside software containers, by providing an additional layer of abstraction and automation of <a href="https://en.wikipedia.org/wiki/Operating-system-level_virtualization">operating-system-level virtualization</a> on Linux, Mac OS and Windows.</p>
+<p><a href="https://www.docker.com">Docker</a> is an open-source project that automates the deployment of applications inside software containers, by providing an additional layer of abstraction and automation of <a href="https://en.wikipedia.org/wiki/Operating-system-level_virtualization">operating-system-level virtualization</a> on Linux, Mac OS and Windows.</p>
 
 <p><a name="what-is-laravel"></a></p>
 
@@ -182,7 +193,7 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 
 <p>Instead of providing a full Virtual Machines, like you get with Vagrant, Docker provides you <strong>lightweight</strong> Virtual Containers, that share the same kernel and allow to safely execute independent processes.</p>
 
-<p>In addition to the speed, Docker gives tens of features that cannot be achieved with Vagrant.</p>
+<p>In addition to the speed, Docker gives tons of features that cannot be achieved with Vagrant.</p>
 
 <p>Most importantly Docker can run on Development and on Production (same environment everywhere). While Vagrant is designed for Development only, (so you have to re-provision your server on Production every time).</p>
 
@@ -195,11 +206,10 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 
 <ul>
 <li><p>Homestead is a tool that controls Vagrant for you (using Homestead special commands). And Vagrant manages your Virtual Machine.</p></li>
-<li><p>LaraDock is a tool that controls Docker for you (using Docker Compose official commands). And Docker manages you Virtual Containers.</p></li>
+<li><p>LaraDock is a tool that controls Docker for you (using Docker &amp; Docker Compose official commands). And Docker manages your Virtual Containers.</p></li>
 </ul>
 
-<p>Running a virtual Container is much faster than running a full virtual Machine. 
-<br>Thus <strong>LaraDock is much faster than Homestead</strong>.</p>
+<p>Running a virtual Container is much faster than running a full virtual Machine. Thus <strong>LaraDock is much faster than Homestead</strong>.</p>
 
 <p><a name="Requirements"></a></p>
 
@@ -224,7 +234,9 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 </tr>
 <tr>
 <td><a href="https://docs.docker.com/engine/installation/linux/ubuntulinux">Docker Engine</a></td>
-<td><a href="https://www.docker.com/toolbox">Docker Toolbox</a></td>
+<td>
+<a href="https://www.docker.com/toolbox">Docker Toolbox</a> OR <a href="https://beta.docker.com/">Native Docker</a>
+</td>
 </tr>
 <tr>
 <td><a href="https://docs.docker.com/compose/install">Docker Compose</a></td>
@@ -233,74 +245,69 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 </tbody>
 </table>
 
+<p><a name="Demo"></a></p>
+
+<h2>
+<a id="demo-video" class="anchor" href="#demo-video" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Demo Video</h2>
+
+<p>What's better than a <a href="https://www.youtube.com/watch?v=-DamFMczwDA"><strong>Demo Video</strong></a> :)</p>
+
 <p><a name="Installation"></a></p>
 
 <h2>
 <a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
 
-<h4>
-<a id="a---in-existing-laravel-projects" class="anchor" href="#a---in-existing-laravel-projects" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>A - In existing Laravel Projects:</h4>
+<p>1 - Clone the <code>LaraDock</code> repository.</p>
 
-<p>1 - Clone the <code>LaraDock</code> repository, inside your <code>Laravel</code> project root direcotry:</p>
+<p><strong>A)</strong> If you already have a Laravel project, clone this repository on your <code>Laravel</code> root direcotry:</p>
 
 <div class="highlight highlight-source-shell"><pre>git submodule add https://github.com/LaraDock/laradock.git</pre></div>
 
-<p>2 - That's it, jump to the Usage section now.</p>
+<blockquote>
+<p>If you are not already using Git for your Laravel project, you can use <code>git clone</code> instead of <code>git submodule</code>.</p>
+</blockquote>
 
-<p><em>If you are not already using Git for your Laravel project, you can use <code>git clone</code> instead of <code>git submodule</code>.</em></p>
-
-<p><br></p>
-
-<h4>
-<a id="b---from-scratch-install-laradock-and-laravel" class="anchor" href="#b---from-scratch-install-laradock-and-laravel" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>B - From scratch (Install LaraDock and Laravel):</h4>
-
-<p><em>If you don't have any Laravel project yet, and you want to start your Laravel project with Docker.</em></p>
-
-<p>1 - Clone the <code>LaraDock</code> repository anywhere on your machine:</p>
+<p><strong>B)</strong> If you don't have a Laravel project, and you want to install Laravel from Docker, clone this repo anywhere on your machine:</p>
 
 <div class="highlight highlight-source-shell"><pre>git clone https://github.com/LaraDock/laradock.git</pre></div>
-
-<p>2 - Go to the Uage section below and do the steps 1 and 3 then come back here.</p>
-
-<p>3 - Enter the Workspace container. (assuming you have the Workspace container running):</p>
-
-<div class="highlight highlight-source-shell"><pre>docker <span class="pl-c1">exec</span> -it {Workspace-Container-Name} bash</pre></div>
-
-<p>Replace <code>{Workspace-Container-Name}</code> with your Workspace container name. To get the name type <code>docker-compose ps</code> and copy it.</p>
-
-<p>4 - Install Laravel anyway you like. </p>
-
-<p>Example using the Laravel Installer:</p>
-
-<div class="highlight highlight-source-shell"><pre>laravel new my-cool-app</pre></div>
-
-<p>For more about this check out this <a href="https://laravel.com/docs/master#installing-laravel">link</a>.</p>
-
-<p>5 - Edit <code>docker-compose.yml</code> to Map the new application path:</p>
-
-<p>By default LaraDock assumes the Laravel application is living in the parent directory of the laradock folder. </p>
-
-<p>Since the new Laravel application is in the <code>my-cool-app</code> folder, we should replace <code>../:/var/www/laravel</code> with <code>../my-cool-app/:/var/www/laravel</code>, as follow:</p>
-
-<div class="highlight highlight-source-yaml"><pre>    <span class="pl-s"><span class="pl-ent">application:</span></span>
-        <span class="pl-s"><span class="pl-ent">build:</span> <span class="pl-s">./application</span></span>
-        <span class="pl-s"><span class="pl-ent">volumes:</span></span>
-            <span class="pl-s">- <span class="pl-s">../my-cool-app/:/var/www/laravel</span></span></pre></div>
-
-<p>6 - finally go to the Usage section below again and do steps 2 and 4.</p>
 
 <p><a name="Usage"></a></p>
 
 <h2>
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
 
-<p>1 - For <strong>Windows &amp; MAC</strong> users only: make sure you have a running Docker Virtual Host on your machine. 
-(<strong>Linux</strong> users don't need a Virtual Host, so skip this step).
-<br>
-<a href="#Run-Docker-Virtual-Host">How to run a Docker Virtual Host?</a></p>
+<p>1 - For <strong>Windows &amp; MAC</strong> users only: If you are not using the native Docker-Engine <code>Beta</code>, make sure you have a running Docker Virtual Host on your machine.
+<a href="#Run-Docker-Virtual-Host">How to run a Docker Virtual Host?</a>
+(<strong>Linux</strong> users don't need a Virtual Host, so skip this step).</p>
 
 <p><br>
-2 - Open your Laravel's <code>.env</code> file and set the <code>DB_HOST</code> to your <code>{Docker-IP}</code>:</p>
+2 - Run some Containers: <em>(Make sure you are in the <code>laradock</code> folder before running the <code>docker-compose</code> commands).</em></p>
+
+<p><strong>Example:</strong> Running NGINX and MySQL:</p>
+
+<div class="highlight highlight-source-shell"><pre>docker-compose up -d  nginx mysql</pre></div>
+
+<p>You can select your own combination of container form this list:</p>
+
+<p><code>nginx</code>, <code>mysql</code>, <code>redis</code>, <code>postgres</code>, <code>mariadb</code>, <code>neo4j</code>, <code>mongo</code>, <code>memcached</code>, <code>beanstalkd</code>, <code>beanstalkd-console</code>, <code>workspace</code>, <code>data</code>, <code>php-fpm</code>, <code>application</code>.</p>
+
+<p><strong>Note</strong>: <code>workspace</code>, <code>data</code>, <code>php-fpm</code> and <code>application</code> will run automatically in most of the cases.</p>
+
+<p><br>
+3 - Enter the Workspace container, to execute commands like (Artisan, Composer, PHPUnit, Gulp, ...).</p>
+
+<div class="highlight highlight-source-shell"><pre>docker <span class="pl-c1">exec</span> -it {Workspace-Container-Name} bash</pre></div>
+
+<p>Replace <code>{Workspace-Container-Name}</code> with your Workspace container name.
+<br>
+To find the containers names type <code>docker-compose ps</code>.</p>
+
+<p><br>
+4 - Edit the Laravel configurations.</p>
+
+<p>If you don't have a Laravel project installed yet, see <a href="#Install-Laravel">How to Install Laravel in a Docker Container</a>.</p>
+
+<p>Open your Laravel's <code>.env</code> file and set the <code>DB_HOST</code> to your <code>{Docker-IP}</code>:</p>
 
 <pre lang="env"><code>DB_HOST=xxx.xxx.xxx.xxx
 </code></pre>
@@ -308,25 +315,12 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 <p><a href="#Find-Docker-IP-Address">How to find my Docker IP Address?</a></p>
 
 <p><br>
-3 - Run the Containers, (you can select the software's (containers) that you wish to run)
-<br>
-<em>Make sure you are in the <code>laradock</code> folder before running the <code>docker-compose</code> command.</em></p>
-
-<p><strong>Example:</strong> Running NGINX, MySQL, Redis and the Workspace:</p>
-
-<div class="highlight highlight-source-shell"><pre>docker-compose up -d  nginx mysql redis workspace</pre></div>
-
-<p><em>Note: the PHP-FPM, Application and Data Containers will automatically run.</em></p>
-
-<p>Supported Containers: <code>workspace</code>, <code>nginx</code>, <code>mysql</code>, <code>redis</code>, <code>postgres</code>, <code>mariadb</code>, <code>memcached</code>, <code>beanstalkd</code>, <code>beanstalkd-console</code>, <code>data</code>, <code>php-fpm</code>, <code>application</code>.</p>
+5 - Open your browser and visit your <code>{Docker-IP}</code> address (<code>http://xxx.xxx.xxx.xxx</code>).</p>
 
 <p><br>
-4 - Open your browser and visit your <code>{Docker-IP}</code> address (<code>http://xxx.xxx.xxx.xxx</code>).</p>
+<strong>Debugging</strong>: if you are facing any problem here check the <a href="#debugging">Debugging</a> section.</p>
 
-<p><br>
-<strong>Debugging</strong>: in case you faced an error here, run this command from the Laravel root directory:</p>
-
-<div class="highlight highlight-source-shell"><pre>sudo chmod -R 777 storage <span class="pl-k">&amp;&amp;</span> sudo chmod -R 777 bootstrap/cache</pre></div>
+<p>If you need a special support. Contact me, more details in the <a href="#Help">Help &amp; Questions</a> section.</p>
 
 <p><br>
 <a name="Documentation"></a></p>
@@ -334,15 +328,17 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 <h2>
 <a id="documentation" class="anchor" href="#documentation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Documentation</h2>
 
+<p><strong>Note:</strong> this documentation doesn't cover the Docker Beta <em>(Native Docker on MAC and Windows)</em>. However, the commands are very similar. We are planning to cover the Docker Beta soon.</p>
+
 <p><a name="Docker"></a></p>
 
 <h3>
-<a id="docker" class="anchor" href="#docker" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Docker</h3>
+<a id="docker" class="anchor" href="#docker" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>[Docker]</h3>
 
 <p><a name="List-current-running-Containers"></a></p>
 
-<h4>
-<a id="list-current-running-containers" class="anchor" href="#list-current-running-containers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>List current running Containers</h4>
+<h3>
+<a id="list-current-running-containers" class="anchor" href="#list-current-running-containers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>List current running Containers</h3>
 
 <div class="highlight highlight-source-shell"><pre>docker ps</pre></div>
 
@@ -353,8 +349,8 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 <p><br>
 <a name="Close-all-running-Containers"></a></p>
 
-<h4>
-<a id="close-all-running-containers" class="anchor" href="#close-all-running-containers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Close all running Containers</h4>
+<h3>
+<a id="close-all-running-containers" class="anchor" href="#close-all-running-containers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Close all running Containers</h3>
 
 <div class="highlight highlight-source-shell"><pre>docker-compose stop</pre></div>
 
@@ -365,18 +361,18 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 <p><br>
 <a name="Delete-all-existing-Containers"></a></p>
 
-<h4>
-<a id="delete-all-existing-containers" class="anchor" href="#delete-all-existing-containers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Delete all existing Containers</h4>
+<h3>
+<a id="delete-all-existing-containers" class="anchor" href="#delete-all-existing-containers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Delete all existing Containers</h3>
 
 <div class="highlight highlight-source-shell"><pre>docker-compose down</pre></div>
 
-<p><em>Note: Careful with this command as it will delete your Data Volume Container as well. (if you want to keep your Database data than you should stop each container by itself as follow):</em> </p>
+<p><em>Note: Careful with this command as it will delete your Data Volume Container as well. (if you want to keep your Database data than you should stop each container by itself as follow):</em></p>
 
 <p><br>
 <a name="Enter-Container"></a></p>
 
-<h4>
-<a id="enter-a-container-ssh-into-a-running-container" class="anchor" href="#enter-a-container-ssh-into-a-running-container" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Enter a Container (SSH into a running Container)</h4>
+<h3>
+<a id="enter-a-container-ssh-into-a-running-container" class="anchor" href="#enter-a-container-ssh-into-a-running-container" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Enter a Container (SSH into a running Container)</h3>
 
 <p>1 - first list the current running containers with <code>docker ps</code></p>
 
@@ -389,12 +385,12 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 <p><br>
 <a name="Edit-Container"></a></p>
 
-<h4>
-<a id="edit-default-container-configuration" class="anchor" href="#edit-default-container-configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Edit default container configuration</h4>
+<h3>
+<a id="edit-default-container-configuration" class="anchor" href="#edit-default-container-configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Edit default container configuration</h3>
 
 <p>Open the <code>docker-compose.yml</code> and change anything you want.</p>
 
-<p>Examples: </p>
+<p>Examples:</p>
 
 <p>Change MySQL Database Name:</p>
 
@@ -409,10 +405,10 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 <p><br>
 <a name="Edit-a-Docker-Image"></a></p>
 
-<h4>
-<a id="edit-a-docker-image" class="anchor" href="#edit-a-docker-image" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Edit a Docker Image</h4>
+<h3>
+<a id="edit-a-docker-image" class="anchor" href="#edit-a-docker-image" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Edit a Docker Image</h3>
 
-<p>1 - Find the <code>dockerfile</code> of the image you want to edit, 
+<p>1 - Find the <code>dockerfile</code> of the image you want to edit,
 <br>
 example for <code>mysql</code> it will be <code>mysql/Dockerfile</code>.</p>
 
@@ -427,8 +423,8 @@ example for <code>mysql</code> it will be <code>mysql/Dockerfile</code>.</p>
 <p><br>
 <a name="Build-Re-build-Containers"></a></p>
 
-<h4>
-<a id="buildre-build-containers" class="anchor" href="#buildre-build-containers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Build/Re-build Containers</h4>
+<h3>
+<a id="buildre-build-containers" class="anchor" href="#buildre-build-containers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Build/Re-build Containers</h3>
 
 <p>If you do any change to any <code>dockerfile</code> make sure you run this command, for the changes to take effect:</p>
 
@@ -441,16 +437,16 @@ example for <code>mysql</code> it will be <code>mysql/Dockerfile</code>.</p>
 <p><br>
 <a name="Add-Docker-Images"></a></p>
 
-<h4>
-<a id="add-more-softwares-docker-images" class="anchor" href="#add-more-softwares-docker-images" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Add more Software's (Docker Images)</h4>
+<h3>
+<a id="add-more-softwares-docker-images" class="anchor" href="#add-more-softwares-docker-images" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Add more Software's (Docker Images)</h3>
 
 <p>To add an image (software), just edit the <code>docker-compose.yml</code> and add your container details, to do so you need to be familiar with the <a href="https://docs.docker.com/compose/compose-file/">docker compose file syntax</a>.</p>
 
 <p><br>
 <a name="View-the-Log-files"></a></p>
 
-<h4>
-<a id="view-the-log-files" class="anchor" href="#view-the-log-files" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>View the Log files</h4>
+<h3>
+<a id="view-the-log-files" class="anchor" href="#view-the-log-files" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>View the Log files</h3>
 
 <p>The Nginx Log file is stored in the <code>logs/nginx</code> directory.</p>
 
@@ -462,12 +458,47 @@ example for <code>mysql</code> it will be <code>mysql/Dockerfile</code>.</p>
 <a name="Laravel"></a></p>
 
 <h3>
-<a id="laravel" class="anchor" href="#laravel" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Laravel</h3>
+<a id="laravel" class="anchor" href="#laravel" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>[Laravel]</h3>
 
-<p><a name="Run-Artisan-Commands"></a></p>
+<p><a name="Install-Laravel"></a></p>
 
-<h4>
-<a id="run-artisan-commands" class="anchor" href="#run-artisan-commands" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Run Artisan Commands</h4>
+<h3>
+<a id="install-laravel-from-a-docker-container" class="anchor" href="#install-laravel-from-a-docker-container" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install Laravel from a Docker Container</h3>
+
+<p>1 - First you need to enter the Workspace Container.</p>
+
+<p>2 - Install Laravel.</p>
+
+<p>Example using Composer</p>
+
+<div class="highlight highlight-source-shell"><pre>composer create-project laravel/laravel my-cool-app <span class="pl-s"><span class="pl-pds">"</span>5.2.*<span class="pl-pds">"</span></span></pre></div>
+
+<blockquote>
+<p>We recommand using <code>composer create-project</code> instead of the Laravel installer, to install Laravel.</p>
+</blockquote>
+
+<p>For more about the Laravel installation click <a href="https://laravel.com/docs/master#installing-laravel">here</a>.</p>
+
+<p>3 - Edit <code>docker-compose.yml</code> to Map the new application path:</p>
+
+<p>By default LaraDock assumes the Laravel application is living in the parent directory of the laradock folder.</p>
+
+<p>Since the new Laravel application is in the <code>my-cool-app</code> folder, we need to replace <code>../:/var/www/laravel</code> with <code>../my-cool-app/:/var/www/laravel</code>, as follow:</p>
+
+<div class="highlight highlight-source-yaml"><pre>    <span class="pl-s"><span class="pl-ent">application:</span></span>
+        <span class="pl-s"><span class="pl-ent">build:</span> <span class="pl-s">./application</span></span>
+        <span class="pl-s"><span class="pl-ent">volumes:</span></span>
+            <span class="pl-s">- <span class="pl-s">../my-cool-app/:/var/www/laravel</span></span></pre></div>
+
+<p>4 - Go to that folder and start working..</p>
+
+<div class="highlight highlight-source-shell"><pre><span class="pl-c1">cd</span> my-cool-app</pre></div>
+
+<p><br>
+<a name="Run-Artisan-Commands"></a></p>
+
+<h3>
+<a id="run-artisan-commands" class="anchor" href="#run-artisan-commands" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Run Artisan Commands</h3>
 
 <p>You can run artisan commands and many other Terminal commands from the Workspace container.</p>
 
@@ -491,15 +522,15 @@ example for <code>mysql</code> it will be <code>mysql/Dockerfile</code>.</p>
 
 <div class="highlight highlight-source-shell"><pre>phpunit</pre></div>
 
-<div class="highlight highlight-source-shell"><pre>laravel new blog</pre></div>
-
 <p><br>
 <a name="Use-Redis"></a></p>
 
-<h4>
-<a id="use-redis" class="anchor" href="#use-redis" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Use Redis</h4>
+<h3>
+<a id="use-redis" class="anchor" href="#use-redis" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Use Redis</h3>
 
-<p>1 - First make sure you run the Redis Container with the <code>docker-compose</code> command.</p>
+<p>1 - First make sure you run the Redis Container (<code>redis</code>) with the <code>docker-compose up</code> command.</p>
+
+<div class="highlight highlight-source-shell"><pre>docker-compose up -d redis</pre></div>
 
 <p>2 - Open your Laravel's <code>.env</code> file and set the <code>REDIS_HOST</code> to your <code>Docker-IP</code> instead of the default <code>127.0.0.1</code> IP.</p>
 
@@ -523,7 +554,7 @@ example for <code>mysql</code> it will be <code>mysql/Dockerfile</code>.</p>
 SESSION_DRIVER=redis
 </code></pre>
 
-<p>4 - Finally make sure you have the <code>predis/predis</code> package <code>(~1.0)</code> installed via Composer first.</p>
+<p>4 - Finally make sure you have the <code>predis/predis</code> package <code>(~1.0)</code> installed via Composer:</p>
 
 <div class="highlight highlight-source-shell"><pre>composer require predis/predis:^1.0</pre></div>
 
@@ -532,15 +563,67 @@ SESSION_DRIVER=redis
 <div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-c1">\</span><span class="pl-c1">Cache</span><span class="pl-k">::</span>store(<span class="pl-s"><span class="pl-pds">'</span>redis<span class="pl-pds">'</span></span>)<span class="pl-k">-&gt;</span>put(<span class="pl-s"><span class="pl-pds">'</span>LaraDock<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Awesome<span class="pl-pds">'</span></span>, <span class="pl-c1">10</span>);</span></pre></div>
 
 <p><br>
+<a name="Use-Mongo"></a></p>
+
+<h3>
+<a id="use-mongo" class="anchor" href="#use-mongo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Use Mongo</h3>
+
+<p>1 - First make sure you run the MongoDB Container (<code>mongo</code>) with the <code>docker-compose up</code> command.</p>
+
+<div class="highlight highlight-source-shell"><pre>docker-compose up -d mongo</pre></div>
+
+<p>2 - Add the MongoDB configurations to the <code>config/database.php</code> config file:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-s"><span class="pl-pds">'</span>connections<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> [</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-s"><span class="pl-pds">'</span>mongodb<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> [</span>
+<span class="pl-s1">        <span class="pl-s"><span class="pl-pds">'</span>driver<span class="pl-pds">'</span></span>   <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>mongodb<span class="pl-pds">'</span></span>,</span>
+<span class="pl-s1">        <span class="pl-s"><span class="pl-pds">'</span>host<span class="pl-pds">'</span></span>     <span class="pl-k">=&gt;</span> env(<span class="pl-s"><span class="pl-pds">'</span>DB_HOST<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>localhost<span class="pl-pds">'</span></span>),</span>
+<span class="pl-s1">        <span class="pl-s"><span class="pl-pds">'</span>port<span class="pl-pds">'</span></span>     <span class="pl-k">=&gt;</span> env(<span class="pl-s"><span class="pl-pds">'</span>DB_PORT<span class="pl-pds">'</span></span>, <span class="pl-c1">27017</span>),</span>
+<span class="pl-s1">        <span class="pl-s"><span class="pl-pds">'</span>database<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> env(<span class="pl-s"><span class="pl-pds">'</span>DB_DATABASE<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>database<span class="pl-pds">'</span></span>),</span>
+<span class="pl-s1">        <span class="pl-s"><span class="pl-pds">'</span>username<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>,</span>
+<span class="pl-s1">        <span class="pl-s"><span class="pl-pds">'</span>password<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>,</span>
+<span class="pl-s1">        <span class="pl-s"><span class="pl-pds">'</span>options<span class="pl-pds">'</span></span>  <span class="pl-k">=&gt;</span> [</span>
+<span class="pl-s1">            <span class="pl-s"><span class="pl-pds">'</span>database<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>,</span>
+<span class="pl-s1">        ]</span>
+<span class="pl-s1">    ],</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-c">// ...</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1">],</span></pre></div>
+
+<p>3 - Open your Laravel's <code>.env</code> file and update the following variables:</p>
+
+<ul>
+<li>set the <code>DB_HOST</code> to your <code>Docker-IP</code>.</li>
+<li>set the <code>DB_PORT</code> to <code>27017</code>.</li>
+<li>set the <code>DB_DATABASE</code> to <code>database</code>.</li>
+</ul>
+
+<p>4 - Finally make sure you have the <code>jenssegers/mongodb</code> package installed via Composer and its Service Provider is added.</p>
+
+<div class="highlight highlight-source-shell"><pre>composer require jenssegers/mongodb</pre></div>
+
+<p>More details about this <a href="https://github.com/jenssegers/laravel-mongodb#installation">here</a>.</p>
+
+<p>5 - Test it:</p>
+
+<ul>
+<li>First let your Models extend from the Mongo Eloquent Model. Check the <a href="https://github.com/jenssegers/laravel-mongodb#eloquent">documentation</a>.</li>
+<li>Enter the Workspace Container <code>docker exec -it laradock_workspace_1 bash</code>.</li>
+<li>Migrate the Database <code>php artisan migrate</code>.</li>
+</ul>
+
+<p><br>
 <a name="PHP"></a></p>
 
 <h3>
-<a id="php" class="anchor" href="#php" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>PHP</h3>
+<a id="php" class="anchor" href="#php" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>[PHP]</h3>
 
 <p><a name="Install-PHP-Extensions"></a></p>
 
-<h4>
-<a id="install-php-extensions" class="anchor" href="#install-php-extensions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install PHP Extensions</h4>
+<h3>
+<a id="install-php-extensions" class="anchor" href="#install-php-extensions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install PHP Extensions</h3>
 
 <p>Before installing PHP extensions, you have to decide whether you need for the <code>FPM</code> or <code>CLI</code> because each lives on a different container, if you need it for both you have to edit both containers.</p>
 
@@ -551,8 +634,8 @@ The PHP-CLI extensions should be installed in <code>workspace/Dockerfile</code>.
 <p><br>
 <a name="Change-the-PHP-FPM-Version"></a></p>
 
-<h4>
-<a id="change-the-php-fpm-version" class="anchor" href="#change-the-php-fpm-version" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Change the PHP-FPM Version</h4>
+<h3>
+<a id="change-the-php-fpm-version" class="anchor" href="#change-the-php-fpm-version" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Change the PHP-FPM Version</h3>
 
 <p>By default <strong>PHP-FPM 7.0</strong> is running.</p>
 
@@ -564,11 +647,11 @@ The PHP-CLI extensions should be installed in <code>workspace/Dockerfile</code>.
 
 <p>2 - Search for <code>Dockerfile-70</code> in the PHP container section.</p>
 
-<p>3 - Change the version number. 
+<p>3 - Change the version number.
 <br>
 Example to select version 5.6 instead of 7.0 you have to replace <code>Dockerfile-70</code> with <code>Dockerfile-56</code>.</p>
 
-<p>Sample: </p>
+<p>Sample:</p>
 
 <pre lang="txt"><code>php-fpm:
     build:
@@ -596,8 +679,8 @@ Example to select version 5.6 instead of 7.0 you have to replace <code>Dockerfil
 <p><br>
 <a name="Change-the-PHP-CLI-Version"></a></p>
 
-<h4>
-<a id="change-the-php-cli-version" class="anchor" href="#change-the-php-cli-version" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Change the PHP-CLI Version</h4>
+<h3>
+<a id="change-the-php-cli-version" class="anchor" href="#change-the-php-cli-version" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Change the PHP-CLI Version</h3>
 
 <p>By default <strong>PHP-CLI 7.0</strong> is running.</p>
 
@@ -613,12 +696,12 @@ Example to select version 5.6 instead of 7.0 you have to replace <code>Dockerfil
 <a name="Misc"></a></p>
 
 <h3>
-<a id="misc" class="anchor" href="#misc" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Misc</h3>
+<a id="misc" class="anchor" href="#misc" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>[Misc]</h3>
 
 <p><a name="Run-Docker-Virtual-Host"></a></p>
 
-<h4>
-<a id="run-a-docker-virtual-host" class="anchor" href="#run-a-docker-virtual-host" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Run a Docker Virtual Host</h4>
+<h3>
+<a id="run-a-docker-virtual-host" class="anchor" href="#run-a-docker-virtual-host" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Run a Docker Virtual Host</h3>
 
 <p>These steps are only for <strong>Windows &amp; MAC</strong> users <em>(Linux users don't need a virtual host)</em>:</p>
 
@@ -640,10 +723,12 @@ Example to select version 5.6 instead of 7.0 you have to replace <code>Dockerfil
 <p><br>
 <a name="Find-Docker-IP-Address"></a></p>
 
-<h4>
-<a id="find-your-docker-ip-address" class="anchor" href="#find-your-docker-ip-address" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Find your Docker IP Address</h4>
+<h3>
+<a id="find-your-docker-ip-address" class="anchor" href="#find-your-docker-ip-address" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Find your Docker IP Address</h3>
 
-<p><strong>On Windows &amp; MAC:</strong> </p>
+<p><strong>On Windows &amp; MAC:</strong></p>
+
+<p>Run this command in your terminal:</p>
 
 <div class="highlight highlight-source-shell"><pre>docker-machine ip default</pre></div>
 
@@ -651,36 +736,26 @@ Example to select version 5.6 instead of 7.0 you have to replace <code>Dockerfil
 
 <p><em>(The default IP is 192.168.99.100)</em></p>
 
+<p><br></p>
+
 <blockquote>
 <p><strong>boot2docker</strong> users: run <code>boot2docker ip</code> <em>(when boot2docker is up)</em>.</p>
 </blockquote>
 
 <p><br>
-<strong>On Linux:</strong> </p>
+<strong>On Linux:</strong></p>
 
-<p>1 - Run <code>ifconfig</code> in the terminal.</p>
+<p>Run this command in your terminal:</p>
 
-<p>2 - In the result search for <code>docker0</code>, your IP address will be next to <code>inet addr</code>.</p>
+<div class="highlight highlight-source-shell"><pre>ifconfig docker0 <span class="pl-k">|</span> grep <span class="pl-s"><span class="pl-pds">'</span>inet<span class="pl-pds">'</span></span> <span class="pl-k">|</span> cut -d: -f2 <span class="pl-k">|</span> awk <span class="pl-s"><span class="pl-pds">'</span>{ print $1}<span class="pl-pds">'</span></span> <span class="pl-k">|</span> head -n1</pre></div>
 
-<p>Example: (In this example your IP address is <code>172.17.0.1</code>).</p>
-
-<div class="highlight highlight-source-shell"><pre>docker0   Link encap:Ethernet  HWaddr 02:42:41:2d:c4:24
-          inet addr:172.17.0.1  Bcast:0.0.0.0  Mask:255.255.0.0
-          UP BROADCAST MULTICAST  MTU:1500  Metric:1
-          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:0
-          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)</pre></div>
-
-<blockquote>
-<p>If you have an easier way to do it, share it with us.</p>
-</blockquote>
+<p><em>(The default IP is 172.17.0.1)</em></p>
 
 <p><br>
 <a name="Use-custom-Domain"></a></p>
 
-<h4>
-<a id="use-custom-domain-instead-of-the-docker-ip" class="anchor" href="#use-custom-domain-instead-of-the-docker-ip" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Use custom Domain (instead of the Docker IP)</h4>
+<h3>
+<a id="use-custom-domain-instead-of-the-docker-ip" class="anchor" href="#use-custom-domain-instead-of-the-docker-ip" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Use custom Domain (instead of the Docker IP)</h3>
 
 <p>Assuming your custom domain is <code>laravel.dev</code> and your current <code>Docker-IP</code> is <code>xxx.xxx.xxx.xxx</code>.</p>
 
@@ -702,6 +777,40 @@ Example:</p>
 <pre lang="conf"><code>server_name laravel.dev;
 </code></pre>
 
+<p><br>
+<a name="Install-Prestissimo"></a></p>
+
+<h3>
+<a id="install-prestissimo" class="anchor" href="#install-prestissimo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install Prestissimo</h3>
+
+<p><a href="https://github.com/hirak/prestissimo">Prestissimo</a> is a plugin for composer which enables parallel install functionality. You can enable Prestissimo by setting <code>INSTALL_PRESTISSIMO=true</code> in the <code>docker-compose.yml</code> file.</p>
+
+<p><br>
+<a name="debugging"></a></p>
+
+<h3>
+<a id="debugging" class="anchor" href="#debugging" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Debugging</h3>
+
+<p><em>Here's a list of the common problems you might face, and the possible solutions.</em></p>
+
+<h4>
+<a id="i-see-a-blank-white-page-instead-of-the-laravel-welcome-page" class="anchor" href="#i-see-a-blank-white-page-instead-of-the-laravel-welcome-page" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>I see a blank (white) page instead of the Laravel 'Welcome' page!</h4>
+
+<p>Run the following command from the Laravel root directory:</p>
+
+<div class="highlight highlight-source-shell"><pre>sudo chmod -R 777 storage bootstrap/cache</pre></div>
+
+<h4>
+<a id="i-see-welcome-to-nginx-instead-of-the-laravel-app" class="anchor" href="#i-see-welcome-to-nginx-instead-of-the-laravel-app" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>I see "Welcome to nginx" instead of the Laravel App!</h4>
+
+<p>Use <code>http://127.0.0.1</code> (or <a href="#Find-Docker-IP-Address">your Docker IP</a>) instead of <code>http://localhost</code> in your browser.</p>
+
+<h4>
+<a id="i-see-an-error-message-containing-address-already-in-use" class="anchor" href="#i-see-an-error-message-containing-address-already-in-use" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>I see an error message containing <code>address already in use</code>
+</h4>
+
+<p>Make sure the ports for the services that you are trying to run (80, 3306, etc.) are not being used already by other programs, such as a built in <code>apache</code>/<code>httpd</code> service or other development tools you have installed.</p>
+
 <p><br></p>
 
 <h2>
@@ -709,36 +818,48 @@ Example:</p>
 
 <p>This little project was built by one man who has a full time job and many responsibilities, so if you like this project and you find that it needs a bug fix or support for new software or upgrade any container, or anything else.. Do not hesitate to contribute, you are more than welcome :)</p>
 
-<h2>
-<a id="support" class="anchor" href="#support" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Support</h2>
-
-<p>To suggest a features or report a bug, open a new <a href="https://github.com/laradock/laradock/issues">Issue</a>.</p>
-
 <p><a name="Help"></a></p>
 
 <h2>
 <a id="help--questions" class="anchor" href="#help--questions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Help &amp; Questions</h2>
 
-<p>If you need help with anything related to this project, shedule a live call with me on <a href="https://www.codementor.io/mahmoudz">Codementor</a>, I'd love to help.</p>
+<p>If you need any help with Docker and Laravel, you can schedule a live call with the creator of this project at <a href="https://www.codementor.io/mahmoudz">Codementor.io</a>, He would love to help.</p>
 
-<p>If you have a short question, send me a direct message on LaraChat, my username is <code>mahmoud_zalt</code>.</p>
+<p>For general questions you can open <a href="https://github.com/laradock/laradock/issues">Issues</a> here on Github (We will label them as questions).</p>
+
+<p>Additionally, you can contact Mahmoud Zalt (the creator of this project) via a direct message on LaraChat, (his username is <code>mahmoud_zalt</code>). Or send him an email (<code>mahmoud@zalt.me</code>).</p>
 
 <h2>
 <a id="credits" class="anchor" href="#credits" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Credits</h2>
 
-<p><a href="http://www.zalt.me"><img src="https://img.shields.io/badge/Author-Mahmoud%20Zalt-orange.svg" alt="Mahmoud Zalt"></a></p>
+<p><strong>Creator:</strong></p>
 
-<p>Twitter: <a href="https://twitter.com/Mahmoud_Zalt">@Mahmoud_Zalt</a>
-<br>
-Website: <a href="http://zalt.me">http://zalt.me</a>
-<br>
-Email: <code>mahmoud@zalt.me</code></p>
+<ul>
+<li>
+<a href="https://github.com/Mahmoudz">Mahmoud Zalt</a>  (Twitter <a href="https://twitter.com/Mahmoud_Zalt">@Mahmoud_Zalt</a>)</li>
+</ul>
+
+<p><strong>Main Contributors:</strong></p>
+
+<ul>
+<li><a href="https://github.com/Kauhat">Jack Fletcher</a></li>
+<li><a href="https://github.com/appleboy">Bo-Yi Wu</a></li>
+<li><a href="https://github.com/AminMkh">Amin Mkh</a></li>
+<li><a href="https://github.com/mattythebatty">Matthew Tonkin Dunn</a></li>
+<li><a href="https://github.com/benmag">Benmag</a></li>
+</ul>
+
+<p><strong>Awesome People:</strong></p>
+
+<ul>
+<li><a href="https://github.com/LaraDock/laradock/graphs/contributors">Contributors</a></li>
+<li><a href="https://github.com/LaraDock/laradock/issues?utf8=%E2%9C%93&amp;q=">Supporters</a></li>
+</ul>
 
 <h2>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
 
-<p><a href="https://github.com/laradock/laradock/blob/master/LICENSE">MIT License</a>
-<a href="%5B%5D()"></a> (MIT)</p>
+<p><a href="https://github.com/laradock/laradock/blob/master/LICENSE">MIT License</a> (MIT)</p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/LaraDock/laradock">LaraDock</a> is maintained by <a href="https://github.com/LaraDock">LaraDock</a>.</span>
