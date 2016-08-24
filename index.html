@@ -85,6 +85,7 @@ It's like Laravel Homestead but for Docker instead of Vagrant.</p>
 <li><a href="#Run-Artisan-Commands">Run Artisan Commands</a></li>
 <li><a href="#Use-Redis">Use Redis</a></li>
 <li><a href="#Use-Mongo">Use Mongo</a></li>
+<li><a href="#Use-phpMyAdmin">Use phpMyAdmin</a></li>
 </ul>
 </li>
 <li>
@@ -94,7 +95,20 @@ It's like Laravel Homestead but for Docker instead of Vagrant.</p>
 <li><a href="#Install-PHP-Extensions">Install PHP Extensions</a></li>
 <li><a href="#Change-the-PHP-FPM-Version">Change the PHP-FPM Version</a></li>
 <li><a href="#Change-the-PHP-CLI-Version">Change the PHP-CLI Version</a></li>
-<li><a href="#Install-xDebug">Install xDebug</a></li>
+<li>
+<a href="#Install-xDebug">Install xDebug</a>
+
+<ul>
+<li><a href="#Controll-xDebug">Start/Stop xDebug</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Production">Production</a>
+
+<ul>
+<li><a href="#Digital-Ocean">Setup Laravel and Docker on Digital Ocean</a></li>
 </ul>
 </li>
 <li>
@@ -214,6 +228,7 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 
 <ul>
 <li>Workspace (PHP7-CLI, Composer, Git, Node, Gulp, SQLite, Vim, Nano, cURL...)</li>
+<li>phpMyAdmin</li>
 </ul>
 </li>
 </ul>
@@ -286,9 +301,7 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 <a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Requirements</h2>
 
 <ul>
-<li>
-<a href="https://git-scm.com/downloads">Git</a><br>
-</li>
+<li><a href="https://git-scm.com/downloads">Git</a></li>
 <li><a href="https://www.docker.com/products/docker/">Docker</a></li>
 </ul>
 
@@ -338,7 +351,7 @@ It contains pre-packaged Docker Images that provides you a wonderful development
 
 <p>You can select your own combination of Containers form the list below:</p>
 
-<p><code>nginx</code>, <code>hhvm</code>, <code>php-fpm</code>, <code>mysql</code>, <code>redis</code>, <code>postgres</code>, <code>mariadb</code>, <code>neo4j</code>, <code>mongo</code>, <code>apache2</code>, <code>caddy</code>, <code>memcached</code>, <code>beanstalkd</code>, <code>beanstalkd-console</code>, <code>workspace</code>.</p>
+<p><code>nginx</code>, <code>hhvm</code>, <code>php-fpm</code>, <code>mysql</code>, <code>redis</code>, <code>postgres</code>, <code>mariadb</code>, <code>neo4j</code>, <code>mongo</code>, <code>apache2</code>, <code>caddy</code>, <code>memcached</code>, <code>beanstalkd</code>, <code>beanstalkd-console</code>, <code>workspace</code>, <code>phpmyadmin</code>.</p>
 
 <p><strong>Note</strong>: <code>workspace</code> and <code>php-fpm</code> will run automatically in most of the cases, so no need to specify them in the <code>up</code> command.</p>
 
@@ -375,9 +388,6 @@ Add <code>--user=laradock</code> (example <code>docker-compose exec --user=larad
 <a id="documentation" class="anchor" href="#documentation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Documentation</h2>
 
 <p><a name="Docker"></a></p>
-
-<h3>
-<a id="docker" class="anchor" href="#docker" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>[Docker]</h3>
 
 <p><a name="List-current-running-Containers"></a></p>
 
@@ -507,9 +517,6 @@ example for <code>mysql</code> it will be <code>mysql/Dockerfile</code>.</p>
 <p><br>
 <a name="Laravel"></a></p>
 
-<h3>
-<a id="laravel" class="anchor" href="#laravel" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>[Laravel]</h3>
-
 <p><a name="Install-Laravel"></a></p>
 
 <h3>
@@ -524,7 +531,7 @@ example for <code>mysql</code> it will be <code>mysql/Dockerfile</code>.</p>
 <div class="highlight highlight-source-shell"><pre>composer create-project laravel/laravel my-cool-app <span class="pl-s"><span class="pl-pds">"</span>5.2.*<span class="pl-pds">"</span></span></pre></div>
 
 <blockquote>
-<p>We recommand using <code>composer create-project</code> instead of the Laravel installer, to install Laravel.</p>
+<p>We recommend using <code>composer create-project</code> instead of the Laravel installer, to install Laravel.</p>
 </blockquote>
 
 <p>For more about the Laravel installation click <a href="https://laravel.com/docs/master#installing-laravel">here</a>.</p>
@@ -698,10 +705,23 @@ e) set it to <code>true</code></p>
 </ul>
 
 <p><br>
-<a name="PHP"></a></p>
+<a name="Use-phpMyAdmin"></a></p>
 
 <h3>
-<a id="php" class="anchor" href="#php" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>[PHP]</h3>
+<a id="use-phpmyadmin" class="anchor" href="#use-phpmyadmin" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Use phpMyAdmin</h3>
+
+<p>1 - Run the phpMyAdmin Container (<code>phpmyadmin</code>) with the <code>docker-compose up</code> command. Example:</p>
+
+<div class="highlight highlight-source-shell"><pre><span class="pl-c"># use with mysql</span>
+docker-compose up -d mysql phpmyadmin
+
+<span class="pl-c"># use with mariadb</span>
+docker-compose up -d mariadb phpmyadmin</pre></div>
+
+<p>2 - Open your browser and visit the localhost on port <strong>8080</strong>:  <code>http://localhost:8080</code></p>
+
+<p><br>
+<a name="PHP"></a></p>
 
 <p><a name="Install-PHP-Extensions"></a></p>
 
@@ -819,11 +839,39 @@ e) set it to <code>true</code></p>
 
 <p>2 - Re-build the containers <code>docker-compose build workspace php-fpm</code></p>
 
+<p>For information on how to configure xDebug with your IDE and work it out, check this <a href="https://github.com/LarryEitel/laravel-laradock-phpstorm">Repository</a>.</p>
+
 <p><br>
-<a name="Misc"></a></p>
+<a name="Controll-xDebug"></a></p>
 
 <h3>
-<a id="misc" class="anchor" href="#misc" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>[Misc]</h3>
+<a id="startstop-xdebug" class="anchor" href="#startstop-xdebug" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Start/Stop xDebug:</h3>
+
+<p>By installing xDebug, you are enabling it to run on startup by default.</p>
+
+<p>To controll the behavior of xDebug (in the <code>php-fpm</code> Container), you can run the following commands from the LaraDock root folder:</p>
+
+<ul>
+<li>Stop xDebug from running by default: <code>./xdebugPhpFpm stop</code>.</li>
+<li>Start xDebug by default: <code>./xdebugPhpFpm start</code>.</li>
+<li>See the status: <code>./xdebugPhpFpm status</code>.</li>
+</ul>
+
+<p><br>
+<a name="Production"></a></p>
+
+<p><br>
+<a name="Digital-Ocean"></a></p>
+
+<h3>
+<a id="setup-laravel-and-docker-on-digital-ocean" class="anchor" href="#setup-laravel-and-docker-on-digital-ocean" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Setup Laravel and Docker on Digital Ocean</h3>
+
+<h4>
+<a id="full-giude-here" class="anchor" href="#full-giude-here" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="https://github.com/LaraDock/laradock/blob/master/_guides/digital_ocean.md">Full Giude Here</a>
+</h4>
+
+<p><br>
+<a name="Misc"></a></p>
 
 <p><br>
 <a name="Use-custom-Domain"></a></p>
@@ -966,7 +1014,7 @@ e) set it to <code>true</code></p>
 <p>This little project was built by one man who has a full time job and many responsibilities, so if you like this project and you find that it needs a bug fix or support for new software or upgrade any container, or anything else.. Do not hesitate to contribute, you are more than welcome :)</p>
 
 <h4>
-<a id="read-our-contribution-guidelines" class="anchor" href="#read-our-contribution-guidelines" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Read our <a href="https://github.com/LaraDock/laradock/blob/master/CONTRIBUTING.md">Contribution Guidelines</a>
+<a id="read-our-contribution-guidelines" class="anchor" href="#read-our-contribution-guidelines" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Read our <a href="https://github.com/LaraDock/laradock/blob/master/_guides/contributing.md">Contribution Guidelines</a>
 </h4>
 
 <p><a name="Help"></a></p>
@@ -993,6 +1041,11 @@ e) set it to <code>true</code></p>
 <p><strong>Main Contributors:</strong></p>
 
 <ul>
+<li><a href="https://github.com/midascodebreaker">MidasCodeBreaker</a></li>
+<li><a href="https://github.com/LarryEitel">Larry Eitel (LarryEitel)</a></li>
+<li><a href="https://github.com/tianissimo">Suteepat (tianissimo)</a></li>
+<li><a href="https://github.com/davidavz">David (davidavz)</a></li>
+<li><a href="https://github.com/lialosiu">Lialosiu</a></li>
 <li><a href="https://github.com/computerfr33k">Eric Pfeiffer (computerfr33k)</a></li>
 <li><a href="https://github.com/orette">Orette</a></li>
 <li><a href="https://github.com/Kauhat">Jack Fletcher (Kauhat)</a></li>
