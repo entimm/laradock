@@ -65,7 +65,7 @@ services:
         volumes:
             - ./logs/nginx/:/var/log/nginx
         ports:
-            - "80:80"
+            - "88:80"
             - "443:443"
         links:
             - php-fpm
